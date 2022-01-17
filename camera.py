@@ -30,9 +30,11 @@ class HDIntegratedCamera(Camera):
     class Status:
         OK = 200
 
-    def __init__(self, baseurl: str):
+    def __init__(self, baseurl: str, position: Vector3):
         # Orientation variables
         self.__transform = Transform()
+        self.__transform.position = position
+        # TODO: self.__transform.eulerAngle = FIND OUT ANGLE OF CAMERA OR RESET CAMERA
 
         # Communication variables
         self.__BASEURL = baseurl
