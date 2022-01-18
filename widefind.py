@@ -1,6 +1,7 @@
-from transform import Vector3
 import paho.mqtt.client as mqtt
 import json
+import time
+from transform import Vector3
 
 
 class WideFind:
@@ -25,16 +26,16 @@ class WideFind:
         self.__client.loop_start()
         self.debug = debug
 
-        self.__client.subscribe("#")  # '#' means subscribe to all topics
+        self.__client.subscribe("ltu-system/#")  # '#' means subscribe to all topics
 
     def __on_connect(self, client, userdata, flags, rc, properties=None):
         if self.debug:
-            print("Connected to " + self.broker_url + ":" + self.broker_port)
+            print("Connected to " + self.broker_url + ":" + str(self.broker_port))
 
     def __on_message(self, client, userdata, message):
         # Decode message and put into list
-        mqtt_message_str = message.payload.decode()
-        mqtt_message_json = json.loads(mqtt_message_str)
+        mqtt_message_str = message.payload.decode("utf-8")
+        mqtt_message_json = json.loads(message.payload)
         mqtt_message_list = mqtt_message_json["message"].split(',')
 
         # Update tracker information
@@ -47,7 +48,7 @@ class WideFind:
         self.trackers[tracker_id] = position
 
         if self.debug:
-            print("Tracker with id: " + tracker_id + ", currently positioned at " + position)
+            print("Tracker with id: " + tracker_id + ", currently positioned at " + position.__repr__())
 
         # TODO: Test if threading is really necessary...
         # TODO: Add observer design pattern so that anyone can subscribe to WideFind events
