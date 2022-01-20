@@ -3,10 +3,12 @@ from tkinter.ttk import *
 from turtle import width
 from camera import HDIntegratedCamera
 from transform import Vector3
-import cv2
 from PIL import ImageTk, Image
-import VideoGet
-import VideoShow
+from video_get import VideoGet
+from video_show import VideoShow
+from threading import Thread
+import cv2
+
 
 class interface: 
 
@@ -63,6 +65,7 @@ class interface:
                 
                 frame = video_getter.frame
                 video_shower.frame = frame
+                print("this is infinite")
         
         ThreadBoth(src)
         
