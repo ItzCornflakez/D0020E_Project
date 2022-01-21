@@ -1,6 +1,7 @@
 from abc import abstractmethod, ABC
 from enum import Enum
 from transform import Transform, Vector3
+import numpy
 import requests
 
 
@@ -30,12 +31,12 @@ class HDIntegratedCamera(Camera):
     class Status:
         OK = 200
 
-    def __init__(self, baseurl: str, position: Vector3):
+    def __init__(self, baseurl: str, position: numpy.array,zero: numpy.array):
         # Orientation variables
         self.__transform = Transform()
         self.__transform.position = position
         # TODO: self.__transform.eulerAngle = FIND OUT ANGLE OF CAMERA OR RESET CAMERA
-
+        self.__zero_norm = zero -position
         # Communication variables
         self.__BASEURL = baseurl
 
