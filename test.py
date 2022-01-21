@@ -1,22 +1,10 @@
-from video_get import VideoGet
-from video_show import VideoShow
+from interface import interface
 import cv2
 
 src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
 src = 0
 
-def ThreadBoth(src):
-
-            #function that calls 2 separate threads that read and writes the frames from camera respectivly
-
-            video_getter = VideoGet(src).start()
-            video_shower = VideoShow(video_getter.frame).start()
-
-            while True:
-                frame = video_getter.frame
-                video_shower.frame = frame
-
-ThreadBoth(src)
+intface = interface(src)
 
 # cap = cv2.VideoCapture(src)
 

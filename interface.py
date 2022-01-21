@@ -50,24 +50,26 @@ class interface:
         #TODO (this does not work very well unless threading is used(i think), camera lags,
         #  work in progress)
         
-        def ThreadBoth(src):
 
-            #function that calls 2 separate threads that read and writes the frames from camera respectivly
+        #function that calls 2 separate threads that read and writes the frames from camera respectivly
 
-            video_getter = VideoGet(src).start()
-            video_shower = VideoShow(video_getter.frame).start()
+        #video_getter = VideoGet(src).start()
+        #video_shower = VideoShow(video_getter.frame).start()
 
-            while True:
-                if video_getter.stopped or video_shower.stopped:
-                    video_shower.stop()
-                    video_getter.stop()
-                    break
-                
-                frame = video_getter.frame
-                video_shower.frame = frame
-                print("this is infinite")
+        cap = cv2.VideoCapture(src)
+
+        def frame_loop():
+
+            _, frame = cap.read()
+            cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+            img = Image.fromarray(cv2image)
+            img = img.resize((740,500), Image.ANTIALIAS)
+            imgtk = ImageTk.PhotoImage(image=img)
+            lmain.imgtk = imgtk
+            lmain.configure(image=imgtk)
+            lmain.after(10,frame_loop)
         
-        ThreadBoth(src)
+        frame_loop()
         
         #inputs for rotate button
         rotate_Input1 = Entry(style="TEntry", width=5)
@@ -75,25 +77,16 @@ class interface:
 
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", style="BW.TButton")
-        look_Button= Button(text="Look at position", style="BW.TButton")
         follow_Button = Button(text="Follow person", style="BW.TButton")
         disc_Button = Button(text="Disconnect", command=lambda: root.quit(), style="BW.TButton")
 
-        #TODO-Placeholder feature for look at position
-        dropDownList = Combobox(values=["Fridge", "Sofa", "Tv"])
-
         #Place on grid
-        app.grid(row=0, column=0, sticky="nesw")
+        app.grid(row=0, column=0)
         rotate_Input1.grid(row=0, column=1)
         rotate_Input2.grid(row=0, column=2)
         rotate_Button.grid(row=0, column=3)
 
-        
-
         follow_Button.grid(row=1, column=2)
-
-        dropDownList.grid(row=2, column=2)
-        #look_Button.grid(row=2, column=2)
 
         disc_Button.grid(row=3, column=2)
 
