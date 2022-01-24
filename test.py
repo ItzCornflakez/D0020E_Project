@@ -2,7 +2,7 @@ from interface import interface
 import cv2
 
 src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
-src = 0
+#src = 0
 
 intface = interface(src)
 

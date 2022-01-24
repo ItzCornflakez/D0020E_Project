@@ -75,8 +75,15 @@ class interface:
         rotate_Input1 = Entry(style="TEntry", width=5)
         rotate_Input2 = Entry(style="TEntry", width=5)
 
+        def rotate():
+                r_I1 = int(rotate_Input1.get())
+                r_I2 = int(rotate_Input2.get())
+
+                hd_cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23",(0,0,0))
+                hd_cam.rotate(r_I1, r_I2)
+            
         #Create Buttons
-        rotate_Button = Button(text="rotate Camera", style="BW.TButton")
+        rotate_Button = Button(text="rotate Camera", command=rotate, style="BW.TButton")
         follow_Button = Button(text="Follow person", style="BW.TButton")
         disc_Button = Button(text="Disconnect", command=lambda: root.quit(), style="BW.TButton")
 
