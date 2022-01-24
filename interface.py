@@ -6,15 +6,22 @@ from transform import Vector3
 from PIL import ImageTk, Image
 from video_get import VideoGet
 from video_show import VideoShow
-from threading import Thread
+import threading
 import cv2
 import time
+import numpy
 
 
 class interface: 
 
     def __init__(self, src):
         self.createInterface(src)
+
+        camera_pos = numpy.array([950, 3500, 3000])
+        camera_zero = numpy.array([-100, 4000, 2000])
+
+        self.hd_cam = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23", camera_pos, camera_zero)
+
 
     def createInterface(self, src):
         root = Tk()
@@ -56,26 +63,22 @@ class interface:
 
         #video_getter = VideoGet(src).start()
         #video_shower = VideoShow(video_getter.frame).start()
-
+        
         cap = cv2.VideoCapture(src)
+       
 
         def frame_loop():
-            start = time.time()
+            
             _, frame = cap.read()
-            end = time.time()
-            print("this is first:" + (str)(end-start))
-            start = time.time()
             cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
             img = Image.fromarray(cv2image)
             img = img.resize((740,500), Image.ANTIALIAS)
             imgtk = ImageTk.PhotoImage(image=img)
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
-            end = time.time()
-            print("this is second:" + (str)(end-start))
-            lmain.after(100,frame_loop)
+            lmain.after(10,frame_loop)
         
-        frame_loop()
+        t1 = threading.Thread(target=frame_loop).start()
         
         #inputs for rotate button
         rotate_Input1 = Entry(style="TEntry", width=5)
@@ -85,8 +88,8 @@ class interface:
                 r_I1 = int(rotate_Input1.get())
                 r_I2 = int(rotate_Input2.get())
 
-                hd_cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23",(0,0,0))
-                hd_cam.rotate(r_I1, r_I2)
+                
+                self.hd_cam.rotate(r_I1, r_I2)
             
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate, style="BW.TButton")
