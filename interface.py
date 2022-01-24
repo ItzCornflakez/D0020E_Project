@@ -8,6 +8,7 @@ from video_get import VideoGet
 from video_show import VideoShow
 from threading import Thread
 import cv2
+import time
 
 
 class interface: 
@@ -59,15 +60,20 @@ class interface:
         cap = cv2.VideoCapture(src)
 
         def frame_loop():
-
+            start = time.time()
             _, frame = cap.read()
+            end = time.time()
+            print("this is first:" + (str)(end-start))
+            start = time.time()
             cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
             img = Image.fromarray(cv2image)
             img = img.resize((740,500), Image.ANTIALIAS)
             imgtk = ImageTk.PhotoImage(image=img)
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
-            lmain.after(10,frame_loop)
+            end = time.time()
+            print("this is second:" + (str)(end-start))
+            lmain.after(100,frame_loop)
         
         frame_loop()
         
