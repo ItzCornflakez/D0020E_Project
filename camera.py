@@ -1,46 +1,37 @@
-from abc import abstractmethod, ABC
-from enum import Enum
 import numpy
 import requests
 
 
-class Camera:
-
-    @abstractmethod
-    def rotate(self, yaw, pitch):
-        """Rotate camera relative to current orientation.
-
-        Args:
-            yaw (int): "Horizontal" rotation
-            pitch (int): "Vertical" rotation
-        """
-
-        pass
-
-
-class HDIntegratedCamera(Camera):
-    # Values for converting between camera hex and degrees
+class HDIntegratedCamera:
     class Conversion:
+        """Contains values for translating degrees to camera's hex values."""
         DEG_TO_HEX_YAW = 42480 / 350
         DEG_TO_HEX_PITCH = 14562 / 120
 
     class Commands:
+        """Contains strings for different commands the camera accepts."""
         ROTATE = "APC"
 
     class Status:
+        """Contains status values from camera."""
         OK = 200
 
-    def __init__(self, baseurl: str, position: numpy.array, zero: numpy.array):
+    def __init__(self, baseurl: str, position: numpy.array, zero: numpy.array, floor: numpy.array):
         # Communication variables
         self.__BASEURL = baseurl
 
-        # Orientation variables
-        self.__position = position
-        self.__orientation = numpy.array([0, 0, 0])
-        self.__unit_vector_zero = numpy.subtract(zero, position) / numpy.linalg.norm(numpy.subtract(zero, position))
+        # TODO: Remove
+        vector_zero = numpy.subtract(zero, position)
+        vector_floor = numpy.subtract(floor, position)
 
-        # Reset camera rotation
-        self.look_at_coordinate(zero)
+        # Orientation variables
+        self.__current_yaw = 0
+        self.__current_pitch = 0
+
+        # TODO: Move these variables to a separate script inorder to make more generic
+        self.__position = position
+        self.__unit_vector_zero = vector_zero / numpy.linalg.norm(vector_zero)
+        self.__unit_vector_floor = vector_floor / numpy.linalg.norm(vector_floor)
 
     @staticmethod
     def convert_degrees(degrees: int, conv: float) -> str:
@@ -52,18 +43,7 @@ class HDIntegratedCamera(Camera):
         degrees = hex(degrees)
         return str(degrees)[2:].upper()
 
-    def rotate(self, yaw: int, pitch: int):
-        """Rotate camera relative to current orientation."""
-
-        new_yaw = (yaw + self.__orientation[1])
-        new_pitch = (pitch + self.__orientation[2])
-
-        if new_yaw > 360 or new_pitch > 180:
-            raise Exception("Rotation out of range")
-
-        return self.absolute_rotate(new_yaw, new_pitch)
-
-    def absolute_rotate(self, new_yaw: int, new_pitch: int):
+    def rotate(self, new_yaw: int, new_pitch: int):
         """Rotate camera relative to zero pointer"""
         url = self.__BASEURL + self.Commands.ROTATE                             # Rotate command
         url += self.convert_degrees(new_yaw, self.Conversion.DEG_TO_HEX_YAW)      # Yaw argument
@@ -75,17 +55,37 @@ class HDIntegratedCamera(Camera):
         if req.status_code != self.Status.OK:
             raise Exception("Communication with camera failed")
 
-        self.__orientation[1] = new_yaw
-        self.__orientation[2] = new_pitch
+        self.__current_yaw = new_yaw
+        self.__current_pitch = new_pitch
 
+    # TODO: REMOVE AND PUT ELSEWHERE
     def look_at_coordinate(self, coordinate: numpy.array):
+        # Vectors
         vector_coord = numpy.subtract(coordinate, self.__position)
         unit_vector_coord = vector_coord / numpy.linalg.norm(vector_coord)
         unit_vector_zero = self.__unit_vector_zero
+        unit_vector_floor = self.__unit_vector_floor
 
+        # Calculate which side of the room the person is at
+        # side < 0 => bedroom side of the room
+        # side > 0 => kitchen side of the room
+        # https://math.stackexchange.com/questions/214187/point-on-the-left-or-right-side-of-a-plane-in-3d-space
+        matrix = numpy.array([unit_vector_floor, unit_vector_zero, unit_vector_coord])
+        side = numpy.linalg.det(matrix)
+
+        # Calculate degrees for yaw
         dot_product = numpy.dot(unit_vector_coord, unit_vector_zero)
         rad_angle = numpy.arccos(dot_product)
-        deg_angle = int(rad_angle * 180 / 3.1415)
-        print(rad_angle)
-        print(deg_angle)
-        self.absolute_rotate(deg_angle, 150)
+        yaw_deg_angle = int(rad_angle * 180 / 3.1415)
+
+        if side < 0:
+            yaw_deg_angle = 360 - yaw_deg_angle
+
+        # Calculate degrees for yaw
+        dot_product = numpy.dot(unit_vector_coord, unit_vector_floor)
+        rad_angle = numpy.arccos(dot_product)
+        pitch_deg_angle = int(rad_angle * 180 / 3.1415)
+
+        print("Yaw: " + str(yaw_deg_angle) + ", Pitch: " + str(pitch_deg_angle))
+
+        self.rotate(yaw_deg_angle, pitch_deg_angle + 80)
