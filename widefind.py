@@ -1,13 +1,14 @@
+import numpy
 import paho.mqtt.client as mqtt
 import json
-import time
-from transform import Vector3
+import threading
 
 
-class WideFind:
+class WideFind(threading.Thread):
     """Used for connecting to a WideFind sensor."""
 
     def __init__(self, url: str, port: int):
+        threading.Thread.__init__(self)
         # MQTT IP for WideFind
         self.broker_url = url
         self.broker_port = port
@@ -40,15 +41,12 @@ class WideFind:
 
         # Update tracker information
         tracker_id = mqtt_message_list[0][7:]
-        position = Vector3()
-        position.x = mqtt_message_list[2]
-        position.y = mqtt_message_list[3]
-        position.z = mqtt_message_list[4]
+        tracker_pos = numpy.array([int(mqtt_message_list[2]), int(mqtt_message_list[3]), int(mqtt_message_list[4])])
 
-        self.trackers[tracker_id] = position
+        self.trackers[tracker_id] = tracker_pos
 
         if self.debug:
-            print("Tracker with id: " + tracker_id + ", currently positioned at " + position.__repr__())
+            print("Tracker with id: " + tracker_id + ", currently positioned at " + tracker_pos.__repr__())
 
         # TODO: Test if threading is really necessary...
         # TODO: Add observer design pattern so that anyone can subscribe to WideFind events
