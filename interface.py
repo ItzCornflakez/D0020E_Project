@@ -61,22 +61,22 @@ class interface:
 
         #function that calls 2 separate threads that read and writes the frames from camera respectivly
 
-        #video_getter = VideoGet(src).start()
+        video_getter = VideoGet(src).start()
         #video_shower = VideoShow(video_getter.frame).start()
         
-        cap = cv2.VideoCapture(src)
+        #cap = cv2.VideoCapture(src)
        
 
         def frame_loop():
             
-            _, frame = cap.read()
+            frame = video_getter.frame
             cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
             img = Image.fromarray(cv2image)
             img = img.resize((740,500), Image.ANTIALIAS)
             imgtk = ImageTk.PhotoImage(image=img)
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
-            lmain.after(10,frame_loop)
+            lmain.after(5,frame_loop)
         
         t1 = threading.Thread(target=frame_loop).start()
         
