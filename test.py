@@ -5,7 +5,7 @@ import numpy
 from camera import HDIntegratedCamera
 
 src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
-src = 0
+#src = 0
 
 camera_bedroom_pos = numpy.array([1162, 3335, 2326])
 camera_bedroom_zero = numpy.array([133, 3628, 2193])

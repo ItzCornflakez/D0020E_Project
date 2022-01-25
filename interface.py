@@ -1,4 +1,5 @@
-from tkinter import Tk, Label, Button
+from msilib.schema import ListBox
+from tkinter import Tk, Label, Button, StringVar
 from tkinter.ttk import *
 from turtle import width
 from transform import Vector3
@@ -22,6 +23,9 @@ class interface:
         root.geometry('640x480')
         root.attributes('-fullscreen', True)
 
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+
         root.resizable(0,0)
         root.title('Camera Interface')
 
@@ -40,6 +44,9 @@ class interface:
         #StyleSheet for buttons
         style = Style()
         style.configure(style="BW.TButton", foreground="black", background="white")
+        style.configure(style="S.TLabel", font=("Arial", 25))
+
+        title = Label(text="Interface for Camera", style="S.TLabel")
 
         #Creates a frame that the video feed from camera is put in
         app = Frame()
@@ -61,7 +68,7 @@ class interface:
        
 
         def frame_loop():
-            
+
             frame = video_getter.frame
             #_, frame = cap.read()
             video_shower.frame = frame
@@ -93,22 +100,38 @@ class interface:
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
         follow_Button = Button(text="Follow person", style="BW.TButton")
+
+        #TODO-use below for look at person functionality
+        look_at_person_dropdown = Combobox(values=['first person', 'second person'])
+        look_person_Button = Button(text="Look at person", style="BW.TButton")
+
+        #TODO-use below for look at object functionality
+        look_at_object_dropdown = Combobox(values=['microoven', 'oven'])
+        look_object_Button = Button(text="Look at person", style="BW.TButton")
+
         disc_Button = Button(text="Disconnect", command=lambda: root.quit(), style="BW.TButton")
 
         #Place on grid
-        app.grid(row=0, column=0)
+        title.grid(row=0, column=0)
+        app.grid(row=1, column=0, rowspan=4)
         rotate_Input1.grid(row=0, column=1)
         rotate_Input2.grid(row=0, column=2)
         rotate_Button.grid(row=0, column=3)
 
         follow_Button.grid(row=1, column=2)
 
-        disc_Button.grid(row=3, column=2)
+        look_at_person_dropdown.grid(row=2, column=2)
+        look_person_Button.grid(row=2, column=3)
 
-        # Create a frame
+        look_at_object_dropdown.grid(row=3, column=2)
+        look_object_Button.grid(row=3, column=3)
+
+        disc_Button.grid(row=4, column=2)
+
+        #start threads and mainloop
 
         video_getter = VideoGet(src).start()
-        video_shower = VideoShow(video_getter.frame).start()
+        video_shower = VideoShow(video_getter.frame, screen_width, screen_height).start()
         t1 = threading.Thread(target=frame_loop)
         t1.daemon = True
         t1.start()
