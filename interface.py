@@ -1,7 +1,6 @@
 from tkinter import Tk, Label, Button
 from tkinter.ttk import *
 from turtle import width
-from camera import HDIntegratedCamera
 from transform import Vector3
 from PIL import ImageTk, Image
 from video_get import VideoGet
@@ -9,21 +8,15 @@ from video_show import VideoShow
 import threading
 import cv2
 import time
-import numpy
 
 
 class interface: 
 
-    def __init__(self, src):
-        self.createInterface(src)
+    def __init__(self, src, cam):
+        self.createInterface(src, cam)
+        self.cam = cam 
 
-        camera_pos = numpy.array([950, 3500, 3000])
-        camera_zero = numpy.array([-100, 4000, 2000])
-
-        self.hd_cam = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23", camera_pos, camera_zero)
-
-
-    def createInterface(self, src):
+    def createInterface(self, src, cam):
         root = Tk()
         #Define Window
         root.geometry('640x480')
@@ -61,8 +54,8 @@ class interface:
 
         #function that calls 2 separate threads that read and writes the frames from camera respectivly
 
-        video_getter = VideoGet(src).start()
-        #video_shower = VideoShow(video_getter.frame).start()
+        
+        
         
         #cap = cv2.VideoCapture(src)
        
@@ -70,29 +63,35 @@ class interface:
         def frame_loop():
             
             frame = video_getter.frame
-            cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-            img = Image.fromarray(cv2image)
-            img = img.resize((740,500), Image.ANTIALIAS)
-            imgtk = ImageTk.PhotoImage(image=img)
+            #_, frame = cap.read()
+            video_shower.frame = frame
+            imgtk = video_shower.imgtk
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
-            lmain.after(5,frame_loop)
+            
+            # cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+            # img = Image.fromarray(cv2image)
+            # img = img.resize((740,500), Image.ANTIALIAS)
+            # imgtk = ImageTk.PhotoImage(image=img)
+            # lmain.imgtk = imgtk
+            # lmain.configure(image=imgtk)
+            lmain.after(10, frame_loop)
         
-        t1 = threading.Thread(target=frame_loop).start()
+        
         
         #inputs for rotate button
         rotate_Input1 = Entry(style="TEntry", width=5)
         rotate_Input2 = Entry(style="TEntry", width=5)
 
-        def rotate():
+        def rotate_cam():
+                
                 r_I1 = int(rotate_Input1.get())
                 r_I2 = int(rotate_Input2.get())
-
                 
-                self.hd_cam.rotate(r_I1, r_I2)
+                cam.rotate(r_I1, r_I2)
             
         #Create Buttons
-        rotate_Button = Button(text="rotate Camera", command=rotate, style="BW.TButton")
+        rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
         follow_Button = Button(text="Follow person", style="BW.TButton")
         disc_Button = Button(text="Disconnect", command=lambda: root.quit(), style="BW.TButton")
 
@@ -107,6 +106,12 @@ class interface:
         disc_Button.grid(row=3, column=2)
 
         # Create a frame
+
+        video_getter = VideoGet(src).start()
+        video_shower = VideoShow(video_getter.frame).start()
+        t1 = threading.Thread(target=frame_loop)
+        t1.daemon = True
+        t1.start()
 
         root.mainloop()
 

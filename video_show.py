@@ -8,20 +8,24 @@ class VideoShow:
 
     def __init__(self, frame):
         self.frame = frame
+        cv2image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+        img = Image.fromarray(cv2image)
+        img = img.resize((740,500), Image.ANTIALIAS)
+        self.imgtk = ImageTk.PhotoImage(image=img)
     
     def start(self):
-        t2 = Thread(target=self.show, args=()).start()
+        t3 = Thread(target=self.process)
+        t3.daemon = True
+        t3.start()
         return self
 
-    def show(self):
+    def process(self):
         while True:
-            # cv2image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
-            # img = Image.fromarray(cv2image)
-            # img = img.resize((320,220), Image.ANTIALIAS)
-            # imgtk = ImageTk.PhotoImage(image=img)
-            # lmain.imgtk = imgtk
-            # lmain.configure(image=imgtk)
-            cv2.imshow("Video", self.frame)
+            cv2image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+            img = Image.fromarray(cv2image)
+            img = img.resize((740,500), Image.ANTIALIAS)
+            self.imgtk = ImageTk.PhotoImage(image=img)
+
 
 
 

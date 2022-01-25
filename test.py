@@ -1,11 +1,20 @@
 from interface import interface
 import time
 import cv2
+import numpy
+from camera import HDIntegratedCamera
 
-src = "rtsp://130.240.105.145:554/mediainput/h264/stream_1"
-# src = 0
+src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
+src = 0
 
-intface = interface(src)
+camera_bedroom_pos = numpy.array([1162, 3335, 2326])
+camera_bedroom_zero = numpy.array([133, 3628, 2193])
+camera_bedroom_floor = numpy.array([632, 3378,  597])
+        
+
+cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23", camera_bedroom_pos, camera_bedroom_zero, camera_bedroom_floor)
+
+intface = interface(src, cam)
 
 # cap = cv2.VideoCapture(src)
 
