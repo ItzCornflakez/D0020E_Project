@@ -99,7 +99,10 @@ class interface:
             
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
-        follow_Button = Button(text="Follow person", style="BW.TButton")
+        
+        #TODO-use below for follow person functionality
+        follow_person_dropdown = Combobox(values=['first person', 'second person'])
+        follow_person_Button = Button(text="Follow person", style="BW.TButton")
 
         #TODO-use below for look at person functionality
         look_at_person_dropdown = Combobox(values=['first person', 'second person'])
@@ -107,7 +110,7 @@ class interface:
 
         #TODO-use below for look at object functionality
         look_at_object_dropdown = Combobox(values=['microoven', 'oven'])
-        look_object_Button = Button(text="Look at person", style="BW.TButton")
+        look_object_Button = Button(text="Look at object", style="BW.TButton")
 
         disc_Button = Button(text="Disconnect", command=lambda: root.quit(), style="BW.TButton")
 
@@ -118,7 +121,10 @@ class interface:
         rotate_Input2.grid(row=0, column=2)
         rotate_Button.grid(row=0, column=3)
 
-        follow_Button.grid(row=1, column=2)
+        # follow_Button.grid(row=1, column=2)
+
+        follow_person_dropdown.grid(row=1, column=2)
+        follow_person_Button.grid(row=1, column=3)
 
         look_at_person_dropdown.grid(row=2, column=2)
         look_person_Button.grid(row=2, column=3)
