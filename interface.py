@@ -100,9 +100,14 @@ class interface:
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
         
+        def follow_person():
+            val = follow_person_dropdown.get()
+            print("Follow: "+ val)
+
         #TODO-use below for follow person functionality
         follow_person_dropdown = Combobox(values=['first person', 'second person'])
-        follow_person_Button = Button(text="Follow person", style="BW.TButton")
+        follow_person_Button = Button(text="Follow person", command=follow_person, style="BW.TButton")
+        
 
         #TODO-use below for look at person functionality
         look_at_person_dropdown = Combobox(values=['first person', 'second person'])
