@@ -9,13 +9,20 @@ from video_show import VideoShow
 import threading
 import cv2
 import time
+from widefind import WideFind
 
 
 class interface: 
 
-    def __init__(self, src, cam):
+    def __init__(self, src, cam, widefind):
         self.createInterface(src, cam)
-        self.cam = cam 
+        self.cam = cam
+        self.widefind = widefind
+
+        print("In interface init")
+        print("widefind: " + widefind)
+        print("self.widefind" + self.widefind)
+        # self.widefind.run(False)
 
     def createInterface(self, src, cam):
         root = Tk()
@@ -146,7 +153,6 @@ class interface:
         t1 = threading.Thread(target=frame_loop)
         t1.daemon = True
         t1.start()
-
         root.mainloop()
 
         
