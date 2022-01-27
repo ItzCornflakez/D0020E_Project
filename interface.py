@@ -15,16 +15,16 @@ from widefind import WideFind
 class interface: 
 
     def __init__(self, src, cam, widefind):
-        self.createInterface(src, cam)
+        self.createInterface(src, cam, widefind)
         self.cam = cam
         self.widefind = widefind
 
         print("In interface init")
-        print("widefind: " + widefind)
-        print("self.widefind" + self.widefind)
+        print("widefind: " + (str)(widefind))
+        print("self.widefind" + (str)(self.widefind))
         # self.widefind.run(False)
 
-    def createInterface(self, src, cam):
+    def createInterface(self, src, cam, widefind):
         root = Tk()
         #Define Window
         root.geometry('640x480')
@@ -110,6 +110,11 @@ class interface:
         def follow_person():
             val = follow_person_dropdown.get()
             print("Follow: "+ val)
+            trackers = widefind.trackers
+            for key in trackers.keys():
+                print(key)
+            
+
 
         #TODO-use below for follow person functionality
         follow_person_dropdown = Combobox(values=['first person', 'second person'])

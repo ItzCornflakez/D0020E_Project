@@ -25,8 +25,8 @@ class HDIntegratedCamera:
         vector_floor = numpy.subtract(floor, position)
 
         # Orientation variables
-        self.__current_yaw = 0
-        self.__current_pitch = 0
+        self.current_yaw = 0
+        self.current_pitch = 0
 
         # TODO: Move these variables to a separate script inorder to make more generic
         self.__position = position
@@ -55,8 +55,8 @@ class HDIntegratedCamera:
         if req.status_code != self.Status.OK:
             raise Exception("Communication with camera failed")
 
-        self.__current_yaw = new_yaw
-        self.__current_pitch = new_pitch
+        self.current_yaw = new_yaw
+        self.current_pitch = new_pitch
 
     # TODO: REMOVE AND PUT ELSEWHERE
     def look_at_coordinate(self, coordinate: numpy.array):
