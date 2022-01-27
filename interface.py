@@ -10,21 +10,27 @@ import threading
 import cv2
 import time
 from widefind import WideFind
+from observer import Observer, Subject
 
 
-class interface: 
+class interface(Observer): 
 
     def __init__(self, src, cam, widefind):
+
         self.createInterface(src, cam, widefind)
         self.cam = cam
         self.widefind = widefind
 
-        print("In interface init")
-        print("widefind: " + (str)(widefind))
-        print("self.widefind" + (str)(self.widefind))
-        # self.widefind.run(False)
+    def update(self, subject: WideFind) -> None:
+        """
+        Receive update from subject.
+        """
+        pass
+
+
 
     def createInterface(self, src, cam, widefind):
+        wideFindArray = []
         root = Tk()
         #Define Window
         root.geometry('640x480')
@@ -90,6 +96,8 @@ class interface:
             # lmain.imgtk = imgtk
             # lmain.configure(image=imgtk)
             lmain.after(10, frame_loop)
+
+            follow_person_dropdown['values'] = wideFindArray
         
         
         
@@ -109,15 +117,25 @@ class interface:
         
         def follow_person():
             val = follow_person_dropdown.get()
-            print("Follow: "+ val)
-            trackers = widefind.trackers
-            for key in trackers.keys():
-                print(key)
+            print(val)
+            if val in widefind.trackers:
+                print(widefind.trackers[val])
+                cam.look_at_coordinate(widefind.trackers[val])
             
 
+        def getWideFindArray():
+            while(1):             
+                trackers = widefind.trackers
+                test = trackers.copy()
+
+                for key in test.keys():
+                    if(key not in wideFindArray):
+                        wideFindArray.append(key)
+                time.sleep(2)
 
         #TODO-use below for follow person functionality
-        follow_person_dropdown = Combobox(values=['first person', 'second person'])
+
+        follow_person_dropdown = Combobox(values=wideFindArray)
         follow_person_Button = Button(text="Follow person", command=follow_person, style="BW.TButton")
         
 
@@ -155,6 +173,11 @@ class interface:
 
         video_getter = VideoGet(src).start()
         video_shower = VideoShow(video_getter.frame, screen_width, screen_height).start()
+
+        t2 = threading.Thread(target=getWideFindArray)
+        t2.daemon = True
+        t2.start()
+
         t1 = threading.Thread(target=frame_loop)
         t1.daemon = True
         t1.start()
