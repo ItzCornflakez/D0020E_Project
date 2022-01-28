@@ -115,7 +115,12 @@ class interface(Observer):
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
         
+
         def follow_person():
+                time.sleep(0.4)
+                look_at_person()
+
+        def look_at_person():
             val = follow_person_dropdown.get()
             print(val)
             if val in widefind.trackers:
@@ -141,7 +146,7 @@ class interface(Observer):
 
         #TODO-use below for look at person functionality
         look_at_person_dropdown = Combobox(values=['first person', 'second person'])
-        look_person_Button = Button(text="Look at person", style="BW.TButton")
+        look_person_Button = Button(text="Look at person",command=look_at_person, style="BW.TButton")
 
         #TODO-use below for look at object functionality
         look_at_object_dropdown = Combobox(values=['microoven', 'oven'])

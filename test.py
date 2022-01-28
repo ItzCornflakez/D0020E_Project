@@ -5,7 +5,7 @@ import numpy
 from camera import HDIntegratedCamera
 from widefind import WideFind
 
-src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
+src = "rtsp://130.240.105.144:554/mediainput/h264/stream_2"
 src = 0
 
 camera_bedroom_pos = numpy.array([1162, 3335, 2326])
