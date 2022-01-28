@@ -25,6 +25,7 @@ widefind.run("ltu-system/#", False)
 kit_cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
 
 intface = interface(src, cam, kit_cam_trans, widefind)
+widefind.attach(interface)
 
 # cap = cv2.VideoCapture(src)
 

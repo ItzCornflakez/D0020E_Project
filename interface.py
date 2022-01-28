@@ -1,3 +1,4 @@
+from asyncio import sleep
 from msilib.schema import ListBox
 from tkinter import Tk, Label, Button, StringVar
 from tkinter.ttk import *
@@ -90,15 +91,10 @@ class interface(Observer):
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
             
-            # cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-            # img = Image.fromarray(cv2image)
-            # img = img.resize((740,500), Image.ANTIALIAS)
-            # imgtk = ImageTk.PhotoImage(image=img)
-            # lmain.imgtk = imgtk
-            # lmain.configure(image=imgtk)
             lmain.after(10, frame_loop)
 
             follow_person_dropdown['values'] = wideFindArray
+            look_at_person_dropdown['values'] = wideFindArray
         
         
         
@@ -115,15 +111,18 @@ class interface(Observer):
             
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
-        
+        def test():
+            t9 = threading.Thread(target=follow_person)
+            t9.daemon = True
+            t9.start()
 
         def follow_person():
-                time.sleep(0.4)
-                look_at_person()
+                while(1):
+                    look_at_person()
+                    time.sleep(0.2)
 
         def look_at_person():
             val = follow_person_dropdown.get()
-            print(val)
             if val in widefind.trackers:
                 newYaw = cam_trans.get_yaw_from_zero(widefind.trackers["F1587D88122BE247"])
                 newPitch = cam_trans.get_pitch_from_zero(widefind.trackers["F1587D88122BE247"])
@@ -143,11 +142,11 @@ class interface(Observer):
         #TODO-use below for follow person functionality
 
         follow_person_dropdown = Combobox(values=wideFindArray)
-        follow_person_Button = Button(text="Follow person", command=follow_person, style="BW.TButton")
+        follow_person_Button = Button(text="Follow person", command=test, style="BW.TButton")
         
 
         #TODO-use below for look at person functionality
-        look_at_person_dropdown = Combobox(values=['first person', 'second person'])
+        look_at_person_dropdown = Combobox(values=wideFindArray)
         look_person_Button = Button(text="Look at person",command=look_at_person, style="BW.TButton")
 
         #TODO-use below for look at object functionality
