@@ -82,26 +82,14 @@ class interface(Observer):
        
 
         def frame_loop():
-
             frame = video_getter.frame
-            #_, frame = cap.read()
             video_shower.frame = frame
             imgtk = video_shower.imgtk
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
-            
-            # cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-            # img = Image.fromarray(cv2image)
-            # img = img.resize((740,500), Image.ANTIALIAS)
-            # imgtk = ImageTk.PhotoImage(image=img)
-            # lmain.imgtk = imgtk
-            # lmain.configure(image=imgtk)
             lmain.after(10, frame_loop)
-
             follow_person_dropdown['values'] = wideFindArray
-        
-        
-        
+            
         #inputs for rotate button
         rotate_Input1 = Entry(style="TEntry", width=5)
         rotate_Input2 = Entry(style="TEntry", width=5)
