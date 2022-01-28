@@ -1,54 +1,33 @@
 import time
-from abc import ABC
+import numpy
 
 from camera import HDIntegratedCamera
-import widefind as wf
-import numpy as np
-from observer_pattern.observer import Observer
-
-camera_kitchen_pos = np.array([2873, -2602, 2186])
-camera_kitchen_zero = np.array([3413, -2722, 2284])
-camera_kitchen_floor = np.array([2694, -2722, 193])
-
-
-class Main(Observer, ABC):
-    def __init__(self):
-        self.camera = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
-        self.camera_transform = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
-        self.current_tracker = "F1587D88122BE247"
-
-        widefind = wf.WideFind("130.240.74.55", 1883)
-        widefind.attach(self)
-        widefind.run("ltu-system/#", True)
-
-    def update(self, subject: wf.WideFind) -> None:
-
-        if self.current_tracker in subject.trackers.keys():
-            tracker_pos = subject.trackers[self.current_tracker]
-            new_yaw = self.camera_transform.get_yaw_from_zero(tracker_pos)
-            new_pitch = self.camera_transform.get_pitch_from_zero(tracker_pos)
-
-            self.camera.rotate(new_yaw, new_pitch + 80)
-
+from transform import Vector3
+from widefind import WideFind
 
 # This is a makeshift test script.
 # Meant to be replaced by a proper interface.
 
-main = Main()
-
-while True:
-    time.sleep(1)
-    pass
+debug = False
 
 # 17C08B1230924C5D
-# camera_bedroom_pos = numpy.array([1162, 3335, 2326])
-# camera_bedroom_zero = numpy.array([133, 3628, 2193])
-# camera_bedroom_floor = numpy.array([632, 3378,  597])
+camera_bedroom_pos = numpy.array([1162, 3335, 2326])
+camera_bedroom_zero = numpy.array([133, 3628, 2193])
+camera_bedroom_floor = numpy.array([632, 3378,  597])
 
-# widefind = wf.WideFind("130.240.74.55", 1883)
-# widefind.run("ltu-system/#", False)
+camera_kitchen_pos = numpy.array([2873, -2602,  2186])
+camera_kitchen_zero = numpy.array([3413, -2722,  2284])
+camera_kitchen_floor = numpy.array([2694, -2722, 193])
 
-# kit_cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
+# camera_bedroom = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23", camera_bedroom_pos, camera_bedroom_zero, camera_bedroom_floor)
+camera_kitchen = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23", camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
 
-# camera_bedroom = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23")
-# camera_kitchen = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
+widefind = WideFind("130.240.74.55", 1883)
+widefind.run(debug)
+
+while True:
+    time.sleep(.2)
+
+    if "F1587D88122BE247" in widefind.trackers:
+        print(widefind.trackers["F1587D88122BE247"])
+        camera_kitchen.look_at_coordinate(widefind.trackers["F1587D88122BE247"])
