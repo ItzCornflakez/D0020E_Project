@@ -15,10 +15,11 @@ from observer import Observer, Subject
 
 class interface(Observer): 
 
-    def __init__(self, src, cam, widefind):
+    def __init__(self, src, cam, cam_trans, widefind):
 
-        self.createInterface(src, cam, widefind)
+        self.createInterface(src, cam, cam_trans, widefind)
         self.cam = cam
+        self.cam_trans = cam_trans
         self.widefind = widefind
 
     def update(self, subject: WideFind) -> None:
@@ -29,7 +30,7 @@ class interface(Observer):
 
 
 
-    def createInterface(self, src, cam, widefind):
+    def createInterface(self, src, cam, cam_trans, widefind):
         wideFindArray = []
         root = Tk()
         #Define Window
@@ -115,12 +116,18 @@ class interface(Observer):
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
         
+
         def follow_person():
+                time.sleep(0.4)
+                look_at_person()
+
+        def look_at_person():
             val = follow_person_dropdown.get()
             print(val)
             if val in widefind.trackers:
-                print(widefind.trackers[val])
-                cam.look_at_coordinate(widefind.trackers[val])
+                newYaw = cam_trans.get_yaw_from_zero(widefind.trackers["F1587D88122BE247"])
+                newPitch = cam_trans.get_pitch_from_zero(widefind.trackers["F1587D88122BE247"])
+                cam.rotate(newYaw, newPitch + 80)
             
 
         def getWideFindArray():
@@ -141,7 +148,7 @@ class interface(Observer):
 
         #TODO-use below for look at person functionality
         look_at_person_dropdown = Combobox(values=['first person', 'second person'])
-        look_person_Button = Button(text="Look at person", style="BW.TButton")
+        look_person_Button = Button(text="Look at person",command=look_at_person, style="BW.TButton")
 
         #TODO-use below for look at object functionality
         look_at_object_dropdown = Combobox(values=['microoven', 'oven'])
