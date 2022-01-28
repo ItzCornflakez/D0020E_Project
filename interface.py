@@ -10,10 +10,10 @@ from widefind import WideFind
 from observer_pattern.observer import Observer
 
 
-class interface(Observer): 
+class interface:
 
     def __init__(self, src, cam, cam_trans, widefind):
-
+        
         self.createInterface(src, cam, cam_trans, widefind)
         self.cam = cam
         self.cam_trans = cam_trans
