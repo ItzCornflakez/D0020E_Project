@@ -23,9 +23,6 @@ class interface(Observer):
         self.widefind = widefind
 
     def update(self, subject: WideFind) -> None:
-        """
-        Receive update from subject.
-        """
         pass
 
     def createInterface(self, src, cam, cam_trans, widefind):
