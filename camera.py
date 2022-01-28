@@ -21,8 +21,8 @@ class HDIntegratedCamera:
         self.__BASEURL = baseurl
 
         # Orientation variables
-        self.__current_yaw = 0
-        self.__current_pitch = 0
+        self.current_yaw = 0
+        self.current_pitch = 0
 
     @staticmethod
     def convert_degrees(degrees: int, conv: float) -> str:
