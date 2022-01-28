@@ -4,7 +4,7 @@ from abc import ABC
 from camera import HDIntegratedCamera
 import widefind as wf
 import numpy as np
-from observer import Observer, Subject
+from observer import Observer
 
 camera_kitchen_pos = np.array([2873, -2602, 2186])
 camera_kitchen_zero = np.array([3413, -2722, 2284])

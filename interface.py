@@ -1,16 +1,11 @@
-from msilib.schema import ListBox
-from tkinter import Tk, Label, Button, StringVar
+from tkinter import Tk, Label, Button
 from tkinter.ttk import *
-from turtle import width
-from transform import Vector3
-from PIL import ImageTk, Image
 from video_get import VideoGet
 from video_show import VideoShow
 import threading
-import cv2
 import time
 from widefind import WideFind
-from observer import Observer, Subject
+from observer import Observer
 
 
 class interface(Observer): 
