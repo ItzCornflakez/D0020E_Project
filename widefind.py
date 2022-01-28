@@ -1,9 +1,12 @@
+from abc import ABC
+
 import numpy as np
 import paho.mqtt.client as mqtt
 import json
+from observer import Subject, Observer
 
 
-class WideFind:
+class WideFind(Subject, ABC):
     """
     Receives information regarding its trackers from WideFind sensor.
 
@@ -26,6 +29,9 @@ class WideFind:
         self.trackers = {}
         self.debug = False
 
+        # Observer design pattern
+        self._observers = []
+
     def run(self, subscription: str = "#", debug: bool = False) -> None:
         """
         When executed start receiving tracker data regarding subscription.
@@ -42,7 +48,7 @@ class WideFind:
 
     def __on_connect(self, client, userdata, flags, rc, properties=None):
         if self.debug:
-            print("Connected to " + self.broker_url + ":" + str(self.broker_port))
+            print("Widefind: Connected to " + self.broker_url + ":" + str(self.broker_port))
 
     def __on_message(self, client, userdata, message):
         # Decode message and put into list
@@ -56,11 +62,29 @@ class WideFind:
         self.trackers[tracker_id] = tracker_pos
 
         if self.debug:
-            print("Tracker with id: " + tracker_id + ", currently positioned at " + tracker_pos.__repr__())
+            print("Widefind: Tracker with id: " + tracker_id + ", currently positioned at " + tracker_pos.__repr__())
 
-        # TODO: Test if threading is really necessary...
-        # TODO: Add observer design pattern so that anyone can subscribe to WideFind events
-        # https://refactoring.guru/design-patterns/observer/python/example
+        self.notify()
+
+    # OBSERVER DESIGN PATTERN
+    def attach(self, observer: Observer) -> None:
+        self._observers.append(observer)
+
+        if self.debug:
+            print("Widefind: Attached an observer")
+
+    def detach(self, observer: Observer) -> None:
+        self._observers.remove(observer)
+
+        if self.debug:
+            print("Widefind: Detached an observer")
+
+    def notify(self) -> None:
+        if self.debug:
+            print("Widefind: Notifying observers")
+
+        for observer in self._observers:
+            observer.update(self)
 
 
 class Transform:
