@@ -3,7 +3,7 @@ from abc import ABC
 import numpy as np
 import paho.mqtt.client as mqtt
 import json
-from observer import Subject, Observer
+from observer_pattern.observer import Subject, Observer
 
 
 class WideFind(Subject, ABC):

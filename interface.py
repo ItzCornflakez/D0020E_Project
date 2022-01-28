@@ -7,7 +7,7 @@ from video_show import VideoShow
 import threading
 import time
 from widefind import WideFind
-from observer import Observer
+from observer_pattern.observer import Observer
 
 
 class interface(Observer): 
