@@ -2,16 +2,12 @@ from asyncio import sleep
 from msilib.schema import ListBox
 from tkinter import Tk, Label, Button, StringVar
 from tkinter.ttk import *
-from turtle import width
-from transform import Vector3
-from PIL import ImageTk, Image
 from video_get import VideoGet
 from video_show import VideoShow
 import threading
-import cv2
 import time
 from widefind import WideFind
-from observer import Observer, Subject
+from observer import Observer
 
 
 class interface(Observer): 
@@ -24,12 +20,7 @@ class interface(Observer):
         self.widefind = widefind
 
     def update(self, subject: WideFind) -> None:
-        """
-        Receive update from subject.
-        """
         pass
-
-
 
     def createInterface(self, src, cam, cam_trans, widefind):
         wideFindArray = []
@@ -61,43 +52,28 @@ class interface(Observer):
         style.configure(style="BW.TButton", foreground="black", background="white")
         style.configure(style="S.TLabel", font=("Arial", 25))
 
-        title = Label(text="Interface for Camera", style="S.TLabel")
-
         #Creates a frame that the video feed from camera is put in
         app = Frame()
         app.grid()
-        # Create a label in the frame
         lmain = Label(app)
         lmain.grid()
-
-        #TODO (this does not work very well unless threading is used(i think), camera lags,
-        #  work in progress)
-        
-
-        #function that calls 2 separate threads that read and writes the frames from camera respectivly
-
-        
-        
-        
-        #cap = cv2.VideoCapture(src)
        
-
         def frame_loop():
-
             frame = video_getter.frame
-            #_, frame = cap.read()
             video_shower.frame = frame
             imgtk = video_shower.imgtk
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
-            
             lmain.after(10, frame_loop)
-
             follow_person_dropdown['values'] = wideFindArray
             look_at_person_dropdown['values'] = wideFindArray
         
         
         
+
+
+        title = Label(text="Interface for Camera", style="S.TLabel")
+            
         #inputs for rotate button
         rotate_Input1 = Entry(style="TEntry", width=5)
         rotate_Input2 = Entry(style="TEntry", width=5)

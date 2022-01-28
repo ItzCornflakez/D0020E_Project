@@ -8,8 +8,8 @@ class VideoShow:
 
     def __init__(self, frame, width, height):
         self.frame = frame
-        self.adj_width = (int)(width/1.5)
-        self.adj_height = (int)(height/1.5)
+        self.adj_width = (int)(width/1.2)
+        self.adj_height = (int)(height/1.2)
         cv2image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
         img = Image.fromarray(cv2image)
         img = img.resize((self.adj_width,self.adj_height), Image.ANTIALIAS)
