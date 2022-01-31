@@ -1,34 +1,47 @@
-from asyncio import sleep
 from msilib.schema import ListBox
-from tkinter import Tk, Label, Button, StringVar
+#from tkinter import Tk, Label, Button, StringVar,
+from tkinter import *
 from tkinter.ttk import *
+from turtle import width
+from transform import Vector3
+from PIL import ImageTk, Image
 from video_get import VideoGet
 from video_show import VideoShow
 import threading
+import cv2
 import time
 from widefind import WideFind
-from observer_pattern.observer import Observer
+from observer import Observer, Subject
+from pynput import keyboard
+from pynput._util.win32_vks import DOWN, UP, LEFT, RIGHT
 
 
-class interface:
 
-    def __init__(self, src, cam, cam_trans, widefind):
-        
-        self.createInterface(src, cam, cam_trans, widefind)
+class interface(Observer): 
+
+    def __init__(self, src, cam, widefind):
+
+        self.createInterface(src, cam, widefind)
         self.cam = cam
-        self.cam_trans = cam_trans
         self.widefind = widefind
 
+
     def update(self, subject: WideFind) -> None:
+        """
+        Receive update from subject.
+        """
         pass
 
-    def createInterface(self, src, cam, cam_trans, widefind):
+
+
+    def createInterface(self, src, cam, widefind):
         wideFindArray = []
         root = Tk()
         #Define Window
         root.geometry('640x480')
         root.attributes('-fullscreen', True)
 
+        
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
 
@@ -52,28 +65,48 @@ class interface:
         style.configure(style="BW.TButton", foreground="black", background="white")
         style.configure(style="S.TLabel", font=("Arial", 25))
 
+        title = Label(text="Interface for Camera", style="S.TLabel")
         #Creates a frame that the video feed from camera is put in
         app = Frame()
-        app.grid()
+
+        # Create a label in the frame
         lmain = Label(app)
+        
         lmain.grid()
+
+        #TODO (this does not work very well unless threading is used(i think), camera lags,
+        #  work in progress)
+        
+
+        #function that calls 2 separate threads that read and writes the frames from camera respectivly
+
+
+      
+        
+        #cap = cv2.VideoCapture(src)
        
+
         def frame_loop():
+
             frame = video_getter.frame
+            #_, frame = cap.read()
             video_shower.frame = frame
             imgtk = video_shower.imgtk
             lmain.imgtk = imgtk
             lmain.configure(image=imgtk)
-            lmain.after(10, frame_loop)
-            follow_person_dropdown['values'] = wideFindArray
-            look_at_person_dropdown['values'] = wideFindArray
-        
-        
-        
-
-
-        title = Label(text="Interface for Camera", style="S.TLabel")
             
+            # cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+            # img = Image.fromarray(cv2image)
+            # img = img.resize((740,500), Image.ANTIALIAS)
+            # imgtk = ImageTk.PhotoImage(image=img)
+            # lmain.imgtk = imgtk
+            # lmain.configure(image=imgtk)
+            lmain.after(10, frame_loop)
+
+            follow_person_dropdown['values'] = wideFindArray
+        
+        
+        
         #inputs for rotate button
         rotate_Input1 = Entry(style="TEntry", width=5)
         rotate_Input2 = Entry(style="TEntry", width=5)
@@ -87,22 +120,14 @@ class interface:
             
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
-        def test():
-            t9 = threading.Thread(target=follow_person)
-            t9.daemon = True
-            t9.start()
+         
 
         def follow_person():
-                while(1):
-                    look_at_person()
-                    time.sleep(0.2)
-
-        def look_at_person():
             val = follow_person_dropdown.get()
+            print(val)
             if val in widefind.trackers:
-                newYaw = cam_trans.get_yaw_from_zero(widefind.trackers["F1587D88122BE247"])
-                newPitch = cam_trans.get_pitch_from_zero(widefind.trackers["F1587D88122BE247"])
-                cam.rotate(newYaw, newPitch + 80)
+                print(widefind.trackers[val])
+                cam.look_at_coordinate(widefind.trackers[val])
             
 
         def getWideFindArray():
@@ -114,16 +139,69 @@ class interface:
                     if(key not in wideFindArray):
                         wideFindArray.append(key)
                 time.sleep(2)
+                
+                
+        vector1 = 100
+        vector2 = 100
+        def up(event):
+           # vector1x = vector1
+            #vector2y = vector2
+           # global vector1
+            global vector2
+            #print("W"
+            vector2 += 5
+            vector2 = vector2
+            cam.rotate(vector1, vector2)
 
+        def down(event):
+            vector1x = vector1
+            vector2y = vector2
+            vector2y = vector2 - 5
+            cam.rotate(vector1x, vector2y)
+    
+        def left(event):
+            vector1x = vector1
+            vector2y = vector2           
+            vector1x = vector1 - 5
+            cam.rotate(vector1x, vector2y)
+        
+        def right(event):
+            vector1x = vector1
+            vector2y = vector2
+            vector1x = vector1 + 5
+            cam.rotate(vector1x, vector2y)
         #TODO-use below for follow person functionality
-
+        """def on_press(key):
+            vector1 = int(rotate_Input1.get())
+            vector2 = int(rotate_Input2.get())
+        
+            if key == keyboard.Key.down: # here you can choose the letter you want to get detected
+                print("aa")
+                vector1 =  vector1 - 5
+                cam.rotate(vector1,vector2)
+                
+        
+            if key == keyboard.Key.up: # here you can choose the letter you want to get detected
+                vector1 = vector1 + 5
+                cam.rotate(vector1,vector2)
+        
+            if key == keyboard.Key.left: # here you can choose the letter you want to get detected
+                    vector2 = vector2-5
+                    cam.rotate(vector1,vector2)
+                    
+            if key == keyboard.Key.right: # here you can choose the letter you want to get detected
+                    vector2 = vector2 -5
+                    cam.rotate(vector1,vector2)   
+        
+            with keyboard.Listener(on_press=on_press) as listener:
+                listener.join()"""
         follow_person_dropdown = Combobox(values=wideFindArray)
-        follow_person_Button = Button(text="Follow person", command=test, style="BW.TButton")
+        follow_person_Button = Button(text="Follow person", command=follow_person, style="BW.TButton")
         
 
         #TODO-use below for look at person functionality
-        look_at_person_dropdown = Combobox(values=wideFindArray)
-        look_person_Button = Button(text="Look at person",command=look_at_person, style="BW.TButton")
+        look_at_person_dropdown = Combobox(values=['first person', 'second person'])
+        look_person_Button = Button(text="Look at person", style="BW.TButton")
 
         #TODO-use below for look at object functionality
         look_at_object_dropdown = Combobox(values=['microoven', 'oven'])
@@ -155,7 +233,7 @@ class interface:
 
         video_getter = VideoGet(src).start()
         video_shower = VideoShow(video_getter.frame, screen_width, screen_height).start()
-
+        
         t2 = threading.Thread(target=getWideFindArray)
         t2.daemon = True
         t2.start()
@@ -163,6 +241,15 @@ class interface:
         t1 = threading.Thread(target=frame_loop)
         t1.daemon = True
         t1.start()
+        app.bind("<Up>", up)
+        app.bind("<Down>", down)
+        app.bind("<Left>", left)
+        app.bind("<Right>", right)
+        app.focus_set()
+        app.grid()
         root.mainloop()
+
+
+
 
         
