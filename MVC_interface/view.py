@@ -4,10 +4,10 @@ from MVC_interface.model import Model
 
 from observer_pattern.observer import Observer
 
+
 class View(ttk.Frame, Observer):
     def __init__(self, parent):
         super().__init__(parent)
-
         
 
         #Define column sizes
@@ -29,8 +29,9 @@ class View(ttk.Frame, Observer):
 
         app = Frame()
         app.grid()
-        self.lmain = Label(app)
-        self.lmain.grid()
+        global lmain
+        lmain = Label(app)
+        lmain.grid()
 
         title = Label(text="Interface for Camera", style="S.TLabel")
             
@@ -90,6 +91,6 @@ class View(ttk.Frame, Observer):
         """
         Receive update from subject.
         """
-        self.useless = True
-        self.lmain.imgtk = subject.imgtk
-        self.lmain.configure(image=subject.imgtk)
+        #TODO-this line is bad line
+        lmain.imgtk = subject.imgtk
+        lmain.configure(image=subject.imgtk)

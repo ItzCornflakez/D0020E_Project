@@ -2,6 +2,7 @@ from observer_pattern.observer import Observer, Subject
 from video_get import VideoGet
 from video_show import VideoShow
 import threading
+import time
 
 class Controller(Subject):
     def __init__(self, parent, model, view):

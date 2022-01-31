@@ -19,6 +19,8 @@ class Model(Subject, Observer):
             observer.update(self)
 
     def update(self, subject: Controller) -> None:
+
+        #TODO-this may be fcked
         self.imgtk = subject.imgtk
 
         self.notify()
