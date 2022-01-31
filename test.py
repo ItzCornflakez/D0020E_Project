@@ -1,4 +1,4 @@
-from interface import interface
+#from interface import interface
 import numpy
 from camera import HDIntegratedCamera
 import widefind as wf
@@ -7,6 +7,8 @@ from MVC_interface.controller import Controller
 from MVC_interface.model import Model
 from MVC_interface.view import View
 from observer_pattern.observer import Observer
+from video_get import VideoGet
+from video_show import VideoShow
 
 src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
 src = 0
@@ -33,16 +35,21 @@ class main(tk.Tk):
     def __init__(self):
         super().__init__()
 
+        self.src = src
         self.geometry('640x480')
         self.attributes('-fullscreen', True)
         self.resizable(0,0)
         self.title('Camera Interface')
+        self.screen_width = self.winfo_screenwidth()
+        self.screen_height = self.winfo_screenheight()
+
+        
 
         model = Model()
         
         view = View(self)
-        controller = Controller(model, view)
-        view.set_controller(controller)
+        controller = Controller(self, model, view)
+
 
         model.attach(view)
         controller.attach(model)

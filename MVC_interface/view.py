@@ -1,16 +1,12 @@
 from tkinter.ttk import *
 from tkinter import ttk
+from MVC_interface.model import Model
 
 from observer_pattern.observer import Observer
 
 class View(ttk.Frame, Observer):
     def __init__(self, parent):
         super().__init__(parent)
-
-        
-
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
 
         
 
@@ -90,9 +86,11 @@ class View(ttk.Frame, Observer):
             """
             self.controller = controller
 
-        def update(self, subject: View) -> None:
+        def update(self, subject: Model) -> None:
             """
             Receive update from subject.
             """
-            pass
-
+            self.useless = True
+            lmain.imgtk = subject.imgtk
+            lmain.configure(image=subject.imgtk)
+            print("im here")
