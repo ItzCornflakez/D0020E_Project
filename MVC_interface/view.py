@@ -1,28 +1,30 @@
 from tkinter.ttk import *
+from tkinter import ttk
 
-class View(Frame):
-    def _init(self):
-        root = self.Tk
-        root.geometry('640x480')
-        root.attributes('-fullscreen', True)
+from observer_pattern.observer import Observer
 
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
+class View(ttk.Frame, Observer):
+    def __init__(self, parent):
+        super().__init__(parent)
 
-        root.resizable(0,0)
-        root.title('Camera Interface')
+        
+
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        
 
         #Define column sizes
-        root.columnconfigure(0,weight=10)
-        root.columnconfigure(1,weight=1)
-        root.columnconfigure(2,weight=1)
-        root.columnconfigure(3,weight=1)
+        self.columnconfigure(0,weight=10)
+        self.columnconfigure(1,weight=1)
+        self.columnconfigure(2,weight=1)
+        self.columnconfigure(3,weight=1)
 
         #Define row sizes
-        root.rowconfigure(0, weight=1)
-        root.rowconfigure(1, weight=1)
-        root.rowconfigure(2, weight=1)
-        root.rowconfigure(3, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=1)
+        self.rowconfigure(2, weight=1)
+        self.rowconfigure(3, weight=1)
 
         #StyleSheet for buttons
         style = Style()
@@ -54,7 +56,7 @@ class View(Frame):
         look_at_object_dropdown = Combobox(values=['microoven', 'oven'])
         look_object_Button = Button(text="Look at object", style="BW.TButton")
 
-        disc_Button = Button(text="Disconnect", command=lambda: root.quit(), style="BW.TButton")
+        disc_Button = Button(text="Disconnect", command=lambda: self.quit(), style="BW.TButton")
 
         #Place on grid
         title.grid(row=0, column=0)
@@ -75,4 +77,22 @@ class View(Frame):
         look_object_Button.grid(row=3, column=3)
 
         disc_Button.grid(row=4, column=2)
+
+
+        self.controller = None
+
+
+        def set_controller(self, controller):
+            """
+            Set the controller
+            :param controller:
+            :return:
+            """
+            self.controller = controller
+
+        def update(self, subject: View) -> None:
+            """
+            Receive update from subject.
+            """
+            pass
 

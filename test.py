@@ -11,36 +11,46 @@ from observer_pattern.observer import Observer
 src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
 src = 0
 
-camera_bedroom_pos = numpy.array([1162, 3335, 2326])
-camera_bedroom_zero = numpy.array([133, 3628, 2193])
-camera_bedroom_floor = numpy.array([632, 3378,  597])
+# camera_bedroom_pos = numpy.array([1162, 3335, 2326])
+# camera_bedroom_zero = numpy.array([133, 3628, 2193])
+# camera_bedroom_floor = numpy.array([632, 3378,  597])
         
-camera_kitchen_pos = numpy.array([2873, -2602,  2186])
-camera_kitchen_zero = numpy.array([3413, -2722,  2284])
-camera_kitchen_floor = numpy.array([2694, -2722, 193])
+# camera_kitchen_pos = numpy.array([2873, -2602,  2186])
+# camera_kitchen_zero = numpy.array([3413, -2722,  2284])
+# camera_kitchen_floor = numpy.array([2694, -2722, 193])
 
-cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
-widefind = wf.WideFind("130.240.74.55", 1883)
-widefind.run("ltu-system/#", False)
+# cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
+# widefind = wf.WideFind("130.240.74.55", 1883)
+# widefind.run("ltu-system/#", False)
 
-kit_cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
+# kit_cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
 
 #intface = interface(src, cam, kit_cam_trans, widefind)
 #widefind.attach(interface)
 
 
 class main(tk.Tk):
-    def _init_(self):
-        super()._init()
+    def __init__(self):
+        super().__init__()
 
-        model = Model(Observer)
+        self.geometry('640x480')
+        self.attributes('-fullscreen', True)
+        self.resizable(0,0)
+        self.title('Camera Interface')
+
+        model = Model()
+        
         view = View(self)
         controller = Controller(model, view)
         view.set_controller(controller)
 
+        model.attach(view)
+        controller.attach(model)
 
-main = main()
-main.mainloop()
+if __name__ == '__main__':
+    m = main()
+    m.mainloop()
+    
 
         
 
