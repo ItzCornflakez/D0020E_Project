@@ -141,35 +141,34 @@ class interface(Observer):
                 time.sleep(2)
                 
                 
-        vector1 = 100
-        vector2 = 100
+        vector1X = 100
+        vector2Y = 100
         def up(event):
            # vector1x = vector1
             #vector2y = vector2
-           # global vector1
-            global vector2
+            global vector1X
+            global vector2Y
             #print("W"
-            vector2 += 5
-            vector2 = vector2
-            cam.rotate(vector1, vector2)
-
+            vector2Y += 5           
+            cam.rotate(vector1X, vector2Y)
+            
         def down(event):
-            vector1x = vector1
-            vector2y = vector2
-            vector2y = vector2 - 5
-            cam.rotate(vector1x, vector2y)
+            global vector1X
+            global vector2Y
+            vector2 = vector2Y - 5
+            cam.rotate(vector1X, vector2Y)
     
         def left(event):
-            vector1x = vector1
-            vector2y = vector2           
-            vector1x = vector1 - 5
-            cam.rotate(vector1x, vector2y)
+            global vector1X
+            global vector2Y         
+            vector1X = vector1X - 5
+            cam.rotate(vector1X, vector2Y)
         
         def right(event):
-            vector1x = vector1
-            vector2y = vector2
-            vector1x = vector1 + 5
-            cam.rotate(vector1x, vector2y)
+            global vector1X
+            global vector2Y
+            vector1X = vector1X + 5
+            cam.rotate(vector1X, vector2Y)
         #TODO-use below for follow person functionality
         """def on_press(key):
             vector1 = int(rotate_Input1.get())
@@ -246,6 +245,7 @@ class interface(Observer):
         app.bind("<Left>", left)
         app.bind("<Right>", right)
         app.focus_set()
+        app.pack()
         app.grid()
         root.mainloop()
 
