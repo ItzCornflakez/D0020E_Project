@@ -29,8 +29,8 @@ class View(ttk.Frame, Observer):
 
         app = Frame()
         app.grid()
-        lmain = Label(app)
-        lmain.grid()
+        self.lmain = Label(app)
+        self.lmain.grid()
 
         title = Label(text="Interface for Camera", style="S.TLabel")
             
@@ -78,7 +78,7 @@ class View(ttk.Frame, Observer):
         self.controller = None
 
 
-        def set_controller(self, controller):
+    def set_controller(self, controller):
             """
             Set the controller
             :param controller:
@@ -86,11 +86,10 @@ class View(ttk.Frame, Observer):
             """
             self.controller = controller
 
-        def update(self, subject: Model) -> None:
-            """
-            Receive update from subject.
-            """
-            self.useless = True
-            lmain.imgtk = subject.imgtk
-            lmain.configure(image=subject.imgtk)
-            print("im here")
+    def update(self, subject: Model) -> None:
+        """
+        Receive update from subject.
+        """
+        self.useless = True
+        self.lmain.imgtk = subject.imgtk
+        self.lmain.configure(image=subject.imgtk)

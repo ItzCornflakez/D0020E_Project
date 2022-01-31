@@ -16,10 +16,12 @@ class Controller(Subject):
 
 
     def attach(self, observer: Observer) -> None:
-        self._observers.append(observer)
+        if observer not in self._observers:
+            self._observers.append(observer)
 
     def detach(self, observer: Observer) -> None:
-        self._observers.pop(observer)
+        if observer in self._observers:
+            self._observers.remove(observer)
 
     def notify(self) -> None:
         for observer in self._observers:
@@ -30,5 +32,4 @@ class Controller(Subject):
             frame = self.video_getter.frame
             self.video_shower.frame = frame
             self.imgtk = self.video_shower.imgtk
-            print("hello")
             self.notify()
