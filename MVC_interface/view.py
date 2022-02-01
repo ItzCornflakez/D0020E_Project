@@ -8,6 +8,7 @@ from observer_pattern.observer import Observer
 class View(ttk.Frame, Observer):
     def __init__(self, parent):
         super().__init__(parent)
+        self.old_value = 0
         
 
         #Define column sizes
@@ -55,7 +56,12 @@ class View(ttk.Frame, Observer):
             if not self.controller.is_follow:
                 self.controller.is_follow = True
             else:
-                self.controller.is_follow = False
+                if self.val != self.old_value:
+                    pass
+                else:
+                    self.controller.is_follow = False
+            
+            self.old_value = self.val
 
         self.follow_person_dropdown = Combobox()
         self.follow_person_Button = Button(text="Follow person",command=followWideFind, style="BW.TButton")
