@@ -5,7 +5,7 @@ from observer_pattern.observer import Observer, Subject
 class Model(Subject, Observer):
     def __init__(self):
         self._observers = []
-
+        
     def attach(self, observer: Observer) -> None:
         if observer not in self._observers:
             self._observers.append(observer)
