@@ -92,5 +92,5 @@ class View(ttk.Frame, Observer):
         Receive update from subject.
         """
         #TODO-this line is bad line
-        lmain.imgtk = subject.imgtk
         lmain.configure(image=subject.imgtk)
+        lmain.imgtk = subject.imgtk
