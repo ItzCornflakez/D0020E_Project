@@ -39,7 +39,12 @@ class View(ttk.Frame, Observer):
         rotate_Input1 = Entry(style="TEntry", width=5)
         rotate_Input2 = Entry(style="TEntry", width=5)
 
-        rotate_Button = Button(text="rotate Camera", style="BW.TButton")
+        def rotate_cam(self):
+                
+            self.controller.rotate(int(rotate_Input1.get()), int(rotate_Input2.get()))
+
+
+        rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
 
         follow_person_dropdown = Combobox()
         follow_person_Button = Button(text="Follow person", style="BW.TButton")
@@ -86,6 +91,7 @@ class View(ttk.Frame, Observer):
             :return:
             """
             self.controller = controller
+    
 
     def update(self, subject: Model) -> None:
         """

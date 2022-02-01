@@ -11,7 +11,7 @@ class Controller(Subject):
         self._observers = []
         self.video_getter = VideoGet(parent.src).start()
         self.video_shower = VideoShow(self.video_getter.frame, parent.screen_width, parent.screen_height).start()
-        t1 = threading.Thread(target=self.changeFrame)
+        t1 = threading.Thread(target=self.changeFrameLoop)
         t1.daemon = True
         t1.start()
 
@@ -28,9 +28,14 @@ class Controller(Subject):
         for observer in self._observers:
             observer.update(self)
 
-    def changeFrame(self):
+    def changeFrameLoop(self):
         while(True):
             frame = self.video_getter.frame
             self.video_shower.frame = frame
             self.imgtk = self.video_shower.imgtk
             self.notify()
+    
+    def rotate(self, i, j):
+        self.cam.rotate(i, j)
+
+    def 

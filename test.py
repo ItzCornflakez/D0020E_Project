@@ -21,7 +21,7 @@ src = 0
 # camera_kitchen_zero = numpy.array([3413, -2722,  2284])
 # camera_kitchen_floor = numpy.array([2694, -2722, 193])
 
-# cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
+cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
 # widefind = wf.WideFind("130.240.74.55", 1883)
 # widefind.run("ltu-system/#", False)
 
@@ -36,6 +36,7 @@ class main(tk.Tk):
         super().__init__()
 
         self.src = src
+        self.cam = cam
         self.geometry('640x480')
         self.attributes('-fullscreen', True)
         self.resizable(0,0)
