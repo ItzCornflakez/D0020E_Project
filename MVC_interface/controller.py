@@ -4,16 +4,24 @@ from video_show import VideoShow
 import threading
 import time
 
-class Controller(Subject):
+from widefind import WideFind
+
+class Controller(Subject, Observer):
     def __init__(self, parent, model, view):
         self.model = model
         self.view = view
+        self.cam = parent.cam
+        self.cam_trans = parent.cam_trans
+        self.trackers = []
+        self.trackersDict = {}
         self._observers = []
         self.video_getter = VideoGet(parent.src).start()
         self.video_shower = VideoShow(self.video_getter.frame, parent.screen_width, parent.screen_height).start()
         t1 = threading.Thread(target=self.changeFrameLoop)
         t1.daemon = True
         t1.start()
+
+        self.is_follow = False
 
 
     def attach(self, observer: Observer) -> None:
@@ -37,3 +45,23 @@ class Controller(Subject):
     
     def rotate(self, i, j):
         self.cam.rotate(i, j)
+
+    def lookAtWideFind(self, val):
+            if val in self.trackers:
+                tracker_pos = self.trackersDict[val]
+                new_yaw = self.cam_trans.get_yaw_from_zero(tracker_pos)
+                new_pitch = self.cam_trans.get_pitch_from_zero(tracker_pos)
+
+                self.cam.rotate(new_yaw, new_pitch + 80)
+
+    def update(self, subject: WideFind):
+
+        self.trackersDict = subject.trackers
+        
+        for tracker in subject.trackers:
+            if tracker not in self.trackers:
+                self.trackers.append(tracker)
+        if self.is_follow:
+            self.lookAtWideFind(self.view.val)
+        
+        self.notify()

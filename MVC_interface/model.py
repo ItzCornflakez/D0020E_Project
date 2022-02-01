@@ -20,7 +20,8 @@ class Model(Subject, Observer):
 
     def update(self, subject: Controller) -> None:
 
-        #TODO-this may be fcked
         self.imgtk = subject.imgtk
+
+        self.trackers = subject.trackers
 
         self.notify()

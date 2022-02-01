@@ -29,9 +29,8 @@ class View(ttk.Frame, Observer):
 
         app = Frame()
         app.grid()
-        global lmain
-        lmain = Label(app)
-        lmain.grid()
+        self.lmain = Label(app)
+        self.lmain.grid()
 
         title = Label(text="Interface for Camera", style="S.TLabel")
             
@@ -39,20 +38,31 @@ class View(ttk.Frame, Observer):
         rotate_Input1 = Entry(style="TEntry", width=5)
         rotate_Input2 = Entry(style="TEntry", width=5)
 
-        def rotate_cam(self):
+        def rotate_cam():
                 
             self.controller.rotate(int(rotate_Input1.get()), int(rotate_Input2.get()))
 
 
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
 
-        follow_person_dropdown = Combobox()
-        follow_person_Button = Button(text="Follow person", style="BW.TButton")
         
+        def lookAtWideFind():
+            self.val = self.look_at_person_dropdown.get()
+            self.controller.lookAtWideFind(self.val)
+
+        def followWideFind():
+            self.val = self.follow_person_dropdown.get()
+            if not self.controller.is_follow:
+                self.controller.is_follow = True
+            else:
+                self.controller.is_follow = False
+
+        self.follow_person_dropdown = Combobox()
+        self.follow_person_Button = Button(text="Follow person",command=followWideFind, style="BW.TButton")
 
         #TODO-use below for look at person functionality
-        look_at_person_dropdown = Combobox()
-        look_person_Button = Button(text="Look at person", style="BW.TButton")
+        self.look_at_person_dropdown = Combobox()
+        self.look_person_Button = Button(text="Look at person", command=lookAtWideFind, style="BW.TButton")
 
         #TODO-use below for look at object functionality
         look_at_object_dropdown = Combobox(values=['microoven', 'oven'])
@@ -69,11 +79,11 @@ class View(ttk.Frame, Observer):
 
         # follow_Button.grid(row=1, column=2)
 
-        follow_person_dropdown.grid(row=1, column=2)
-        follow_person_Button.grid(row=1, column=3)
+        self.follow_person_dropdown.grid(row=1, column=2)
+        self.follow_person_Button.grid(row=1, column=3)
 
-        look_at_person_dropdown.grid(row=2, column=2)
-        look_person_Button.grid(row=2, column=3)
+        self.look_at_person_dropdown.grid(row=2, column=2)
+        self.look_person_Button.grid(row=2, column=3)
 
         look_at_object_dropdown.grid(row=3, column=2)
         look_object_Button.grid(row=3, column=3)
@@ -97,6 +107,8 @@ class View(ttk.Frame, Observer):
         """
         Receive update from subject.
         """
-        #TODO-this line is bad line
-        lmain.configure(image=subject.imgtk)
-        lmain.imgtk = subject.imgtk
+        self.lmain.configure(image=subject.imgtk)
+        self.lmain.imgtk = subject.imgtk
+
+        self.follow_person_dropdown['values'] = subject.trackers
+        self.look_at_person_dropdown['values'] = subject.trackers
