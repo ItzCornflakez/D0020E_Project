@@ -37,5 +37,3 @@ class Controller(Subject):
     
     def rotate(self, i, j):
         self.cam.rotate(i, j)
-
-    def 
