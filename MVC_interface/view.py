@@ -42,6 +42,7 @@ class View(ttk.Frame, Observer):
         def rotate_cam():
                 
             self.controller.rotate(int(rotate_Input1.get()), int(rotate_Input2.get()))
+            self.controller.is_follow = False
 
 
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
@@ -50,6 +51,7 @@ class View(ttk.Frame, Observer):
         def lookAtWideFind():
             self.val = self.look_at_person_dropdown.get()
             self.controller.lookAtWideFind(self.val)
+            self.controller.is_follow = False
 
         def followWideFind():
             self.val = self.follow_person_dropdown.get()
