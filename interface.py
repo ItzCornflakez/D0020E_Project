@@ -24,8 +24,9 @@ class interface(Observer):
         self.createInterface(src, cam, widefind)
         self.cam = cam
         self.widefind = widefind
-
-
+        #self.vector1 = 100
+        #self.vector2 = 100
+        
     def update(self, subject: WideFind) -> None:
         """
         Receive update from subject.
@@ -48,6 +49,7 @@ class interface(Observer):
         root.resizable(0,0)
         root.title('Camera Interface')
 
+        #root.pack()
         #Define column sizes
         root.columnconfigure(0,weight=10)
         root.columnconfigure(1,weight=1)
@@ -120,7 +122,39 @@ class interface(Observer):
             
         #Create Buttons
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
-         
+        self.vector1X = 100
+        self.vector2Y = 100
+        def up(event):
+           # vector1x = vector1
+            #vector2y = vector2
+           # global vector1
+           # global vector2
+            #global vector1
+            #print("W"
+            self.vector2Y += 2
+            cam.rotate(self.vector1X, self.vector2Y)
+        
+        
+        def down(event):
+            #global vector2
+            #global vector1    
+            self.vector2Y -= 2
+            cam.rotate(self.vector1X, self.vector2Y)
+        
+        def left(event):
+          #  global vector2
+          #  global vector1
+            self.vector1X -= 2
+            cam.rotate(self.vector1X, self.vector2Y)
+        
+        def right(event):
+           # global vector2
+           # global vector1
+            self.vector1X += 2
+            cam.rotate(self.vector1X, self.vector2Y)
+
+        #root.pack()
+       # root.mainloop() 
 
         def follow_person():
             val = follow_person_dropdown.get()
@@ -141,34 +175,7 @@ class interface(Observer):
                 time.sleep(2)
                 
                 
-        vector1X = 100
-        vector2Y = 100
-        def up(event):
-           # vector1x = vector1
-            #vector2y = vector2
-            global vector1X
-            global vector2Y
-            #print("W"
-            vector2Y += 5           
-            cam.rotate(vector1X, vector2Y)
-            
-        def down(event):
-            global vector1X
-            global vector2Y
-            vector2 = vector2Y - 5
-            cam.rotate(vector1X, vector2Y)
-    
-        def left(event):
-            global vector1X
-            global vector2Y         
-            vector1X = vector1X - 5
-            cam.rotate(vector1X, vector2Y)
-        
-        def right(event):
-            global vector1X
-            global vector2Y
-            vector1X = vector1X + 5
-            cam.rotate(vector1X, vector2Y)
+
         #TODO-use below for follow person functionality
         """def on_press(key):
             vector1 = int(rotate_Input1.get())
@@ -228,26 +235,28 @@ class interface(Observer):
 
         disc_Button.grid(row=4, column=2)
 
+        #app.pack()
         #start threads and mainloop
-
+        root.bind("<Up>", up)
+        root.bind("<Down>", down)
+        root.bind("<Left>", left)
+        root.bind("<Right>", right)
+        root.focus_set()
         video_getter = VideoGet(src).start()
         video_shower = VideoShow(video_getter.frame, screen_width, screen_height).start()
         
         t2 = threading.Thread(target=getWideFindArray)
         t2.daemon = True
         t2.start()
-
+        
         t1 = threading.Thread(target=frame_loop)
         t1.daemon = True
         t1.start()
-        app.bind("<Up>", up)
-        app.bind("<Down>", down)
-        app.bind("<Left>", left)
-        app.bind("<Right>", right)
-        app.focus_set()
-        app.pack()
+        
+       
         app.grid()
         root.mainloop()
+        #keyboard.mainloop()
 
 
 
