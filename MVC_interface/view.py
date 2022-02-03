@@ -9,7 +9,8 @@ class View(ttk.Frame, Observer):
     def __init__(self, parent):
         super().__init__(parent)
         self.old_value = 0
-        
+        root = Tk()
+
 
         #Define column sizes
         self.columnconfigure(0,weight=10)
@@ -126,11 +127,13 @@ class View(ttk.Frame, Observer):
         look_object_Button.grid(row=3, column=3)
 
         disc_Button.grid(row=4, column=2)
-        app.bind("<Up>", up)
-        app.bind("<Down>", down)
-        app.bind("<Left>", left)
-        app.bind("<Right>", right)
-        app.focus_set()
+        root.bind("<Up>", up)
+        root.bind("<Down>", down)
+        root.bind("<Left>", left)
+        root.bind("<Right>", right)
+        root.focus_set()
+        root.mainloop()
+
 
         self.controller = None
 
