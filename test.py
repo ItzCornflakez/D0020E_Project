@@ -48,8 +48,45 @@ class main(tk.Tk):
         self.screen_width = self.winfo_screenwidth()
         self.screen_height = self.winfo_screenheight()
 
+        self.vector1X = 100
+        self.vector2Y = 100
+        def up(event):
+           # vector1x = vector1
+            #vector2y = vector2
+           # global vector1
+           # global vector2
+            #global vector1
+            #print("W"
+            self.vector2Y += 3
+            cam.rotate(self.vector1X, self.vector2Y)
         
+        
+        def down(event):
+            #global vector2
+            #global vector1    
+            self.vector2Y -= 3
+            cam.rotate(self.vector1X, self.vector2Y)
+        
+        def left(event):
+          #  global vector2
+          #  global vector1
+            self.vector1X -= 3
+            cam.rotate(self.vector1X, self.vector2Y)
+        
+        def right(event):
+           # global vector2
+           # global vector1
+            self.vector1X += 3
+            cam.rotate(self.vector1X, self.vector2Y)
 
+        
+        
+        self.bind("<Up>", up)
+        self.bind("<Down>", down)
+        self.bind("<Left>", left)
+        self.bind("<Right>", right)
+        self.focus_set()
+        #self.mainloop()        
         model = Model()
         
         view = View(self)
