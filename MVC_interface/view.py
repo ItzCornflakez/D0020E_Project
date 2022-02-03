@@ -46,7 +46,36 @@ class View(ttk.Frame, Observer):
 
 
         rotate_Button = Button(text="rotate Camera", command=rotate_cam, style="BW.TButton")
-
+        self.vector1X = 100
+        self.vector2Y = 100
+        def up(event):
+           # vector1x = vector1
+            #vector2y = vector2
+           # global vector1
+           # global vector2
+            #global vector1
+            #print("W"
+            self.vector2Y += 2
+            self.controller.rotate(self.vector1X, self.vector2Y)
+        
+        
+        def down(event):
+            #global vector2
+            #global vector1    
+            self.vector2Y -= 2
+            self.controller.rotate(self.vector1X, self.vector2Y)
+        
+        def left(event):
+          #  global vector2
+          #  global vector1
+            self.vector1X -= 2
+            self.controller.rotate(self.vector1X, self.vector2Y)
+        
+        def right(event):
+           # global vector2
+           # global vector1
+            self.vector1X += 2
+            self.controller.rotate(self.vector1X, self.vector2Y)
         
         def lookAtWideFind():
             self.val = self.look_at_person_dropdown.get()
@@ -97,7 +126,11 @@ class View(ttk.Frame, Observer):
         look_object_Button.grid(row=3, column=3)
 
         disc_Button.grid(row=4, column=2)
-
+        app.bind("<Up>", up)
+        app.bind("<Down>", down)
+        app.bind("<Left>", left)
+        app.bind("<Right>", right)
+        app.focus_set()
 
         self.controller = None
 
