@@ -24,6 +24,8 @@ class HDIntegratedCamera:
         self.current_yaw = 0
         self.current_pitch = 0
 
+        self.rotate(self.current_yaw, self.current_pitch)
+
     @staticmethod
     def convert_degrees(degrees: int, conv: float) -> str:
         """Converts degrees to hexadecimal for rotation command to HD Integrated Camera"""
@@ -46,5 +48,5 @@ class HDIntegratedCamera:
         if req.status_code != self.Status.OK:
             raise Exception("Communication with camera failed")
 
-        self.__current_yaw = new_yaw
-        self.__current_pitch = new_pitch
+        self.current_yaw = new_yaw
+        self.current_pitch = new_pitch

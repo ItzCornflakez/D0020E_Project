@@ -6,7 +6,7 @@ from MVC_interface.controller import Controller
 from MVC_interface.model import Model
 from MVC_interface.view import View
 
-src = "rtsp://130.240.105.145:554/mediainput/h264/stream_1"
+src = "rtsp://130.240.105.144:554/mediainput/h264/stream_1"
 # src = 0 # Face cam for debug
 
 camera_bedroom_pos = numpy.array([1162, 3335, 2326])
@@ -21,8 +21,8 @@ cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
 widefind = wf.WideFind("130.240.74.55", 1883)
 widefind.run("ltu-system/#", False)
 
-kit_cam_trans = wf.Transform(camera_bedroom_pos, camera_bedroom_zero, camera_bedroom_floor)
-# kit_cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
+# kit_cam_trans = wf.Transform(camera_bedroom_pos, camera_bedroom_zero, camera_bedroom_floor)
+kit_cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
 
 
 class Main(tk.Tk):
@@ -32,7 +32,6 @@ class Main(tk.Tk):
         # Start conditions
         self.src = src
         self.cam = cam
-        self.cam.rotate(90,90)
         self.cam_trans = kit_cam_trans
         self.geometry('640x480')
         self.attributes('-fullscreen', True)
