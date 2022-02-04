@@ -34,7 +34,13 @@ class HDIntegratedCamera:
         self.__current_yaw = new_yaw % 360
 
     def set_current_pitch(self, new_pitch: int):
-        self.__current_pitch = new_pitch % 180
+        if new_pitch > 180:
+            new_pitch = 180
+
+        if new_pitch < 0:
+            new_pitch = 0
+
+        self.__current_pitch = new_pitch
 
 
     @staticmethod
