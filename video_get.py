@@ -1,5 +1,6 @@
 from threading import Thread
 import cv2
+import time 
 
 class VideoGet:
 
@@ -19,6 +20,14 @@ class VideoGet:
     def get(self):
         while True:
             (self.grabbed, self.frame) = self.stream.read()
+
+
+    def changeCameraSrc(self, src):
+        self.stream.release()
+        time.sleep(1)
+        self.stream = cv2.VideoCapture(src)
+        (self.grabbed, self.frame) = self.stream.read()
+
 
 
 

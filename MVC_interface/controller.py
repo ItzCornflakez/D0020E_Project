@@ -1,10 +1,13 @@
+from camera import HDIntegratedCamera
 from observer_pattern.observer import Observer, Subject
 from video_get import VideoGet
 from video_show import VideoShow
 import threading
 import time
+import numpy
 
 from widefind import WideFind
+import widefind as wf
 
 class Controller(Subject, Observer):
     def __init__(self, parent, model, view):
@@ -49,7 +52,7 @@ class Controller(Subject, Observer):
         self.parent.focus_set()
 
         self.is_follow = False
-
+        self.which_camera = True
 
     def attach(self, observer: Observer) -> None:
         if observer not in self._observers:
@@ -80,6 +83,24 @@ class Controller(Subject, Observer):
                 new_pitch = self.cam_trans.get_pitch_from_zero(tracker_pos)
 
                 self.cam.rotate(new_yaw, new_pitch + 80)
+
+    def changeCamera(self, room):
+        if room == "Bedroom":
+            try:
+                self.video_getter.changeCameraSrc("rtsp://130.240.105.145:554/mediainput/h264/stream_1")
+                self.cam = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23")
+                self.cam_trans = wf.Transform(self.parent.camera_bedroom_pos, self.parent.camera_bedroom_zero, self.parent.camera_bedroom_floor)
+            except:
+                print("error")
+
+        if room == "Kitchen":
+            try:
+                self.video_getter.changeCameraSrc("rtsp://130.240.105.144:554/mediainput/h264/stream_1")
+                self.cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
+                self.cam_trans = wf.Transform(self.parent.camera_kitchen_pos, self.parent.camera_kitchen_zero, self.parent.camera_kitchen_floor)
+            except:
+                print("error")
+
 
     def update(self, subject: WideFind):
 

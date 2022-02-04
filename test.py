@@ -1,4 +1,3 @@
-#from interface import interface
 import numpy
 from camera import HDIntegratedCamera
 import widefind as wf
@@ -36,6 +35,15 @@ kit_cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kit
 class main(tk.Tk):
     def __init__(self):
         super().__init__()
+
+        self.camera_bedroom_pos = camera_bedroom_pos
+        self.camera_bedroom_zero = camera_bedroom_zero
+        self.camera_bedroom_floor = camera_bedroom_floor
+        
+        self.camera_kitchen_pos = camera_kitchen_pos
+        self.camera_kitchen_zero = camera_kitchen_zero
+        self.camera_kitchen_floor = camera_kitchen_floor
+
 
         #Start conditions
         self.src = src

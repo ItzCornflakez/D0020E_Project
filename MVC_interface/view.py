@@ -74,9 +74,14 @@ class View(ttk.Frame, Observer):
         self.look_at_person_dropdown = Combobox()
         self.look_person_Button = Button(text="Look at person", command=lookAtWideFind, style="BW.TButton")
 
-        #TODO-use below for look at object functionality
-        look_at_object_dropdown = Combobox(values=['microoven', 'oven'])
-        look_object_Button = Button(text="Look at object", style="BW.TButton")
+        def changeCamera():
+            self.room = self.change_camera_dropdown.get()
+            print(self.room)
+            self.controller.changeCamera(self.room)
+
+        
+        self.change_camera_dropdown = Combobox(values=['Kitchen', 'Bedroom'])
+        self.change_camera_button = Button(text="Change button", command=changeCamera, style="BW.TButton")
 
         disc_Button = Button(text="Disconnect", command=lambda: self.quit(), style="BW.TButton")
 
@@ -95,12 +100,11 @@ class View(ttk.Frame, Observer):
         self.look_at_person_dropdown.grid(row=2, column=2)
         self.look_person_Button.grid(row=2, column=3)
 
-        look_at_object_dropdown.grid(row=3, column=2)
-        look_object_Button.grid(row=3, column=3)
+
+        self.change_camera_dropdown.grid(row=3, column=2)
+        self.change_camera_button.grid(row=3, column=3)
 
         disc_Button.grid(row=4, column=2)
-
-
 
         self.controller = None
 
