@@ -64,11 +64,14 @@ class View(ttk.Frame, Observer):
                     pass
                 else:
                     self.controller.is_follow = False
+
+            
+            
             
             self.old_value = self.val
 
         self.follow_person_dropdown = Combobox()
-        self.follow_person_Button = Button(text="Follow person",command=followWideFind, style="A.TButton")
+        self.follow_person_Button = Button(text="Follow person",command=followWideFind, style="BW.TButton")
 
         #TODO-use below for look at person functionality
         self.look_at_person_dropdown = Combobox()
@@ -117,3 +120,10 @@ class View(ttk.Frame, Observer):
 
         self.follow_person_dropdown['values'] = subject.trackers
         self.look_at_person_dropdown['values'] = subject.trackers
+
+        if(self.controller.is_follow):
+            self.follow_person_Button['style']="A.TButton"
+        else:
+            self.follow_person_Button['style']="BW.TButton"
+
+        
