@@ -21,8 +21,21 @@ class HDIntegratedCamera:
         self.__BASEURL = baseurl
 
         # Orientation variables
-        self.current_yaw = 0
-        self.current_pitch = 0
+        self.__current_yaw = 0
+        self.__current_pitch = 0
+
+    def get_current_yaw(self):
+        return self.__current_yaw
+
+    def get_current_pitch(self):
+        return self.__current_pitch
+
+    def set_current_yaw(self, new_yaw: int):
+        self.__current_yaw = new_yaw % 360
+
+    def set_current_pitch(self, new_pitch: int):
+        self.__current_pitch = new_pitch % 180
+
 
     @staticmethod
     def convert_degrees(degrees: int, conv: float) -> str:
@@ -46,5 +59,5 @@ class HDIntegratedCamera:
         if req.status_code != self.Status.OK:
             raise Exception("Communication with camera failed")
 
-        self.__current_yaw = new_yaw
-        self.__current_pitch = new_pitch
+        self.set_current_yaw(new_yaw)
+        self.set_current_pitch(new_pitch)
