@@ -23,8 +23,7 @@ class VideoGet:
 
 
     def changeCameraSrc(self, src):
-        self.stream.release()
-        time.sleep(1)
+        #self.stream.release()
         self.stream = cv2.VideoCapture(src)
         (self.grabbed, self.frame) = self.stream.read()
 
