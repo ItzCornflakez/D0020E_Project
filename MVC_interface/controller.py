@@ -23,19 +23,19 @@ class Controller(Subject, Observer):
         t1.start()
 
         rot_amount = 6
-        self.cam.current_pitch = 120  # 0 - 90 is the same
+        self.cam.set_current_pitch(120)  # 0 - 90 is the same
 
         def up(event):
-            self.cam.rotate(self.cam.current_yaw, self.cam.current_pitch + rot_amount)
+            self.cam.rotate(self.cam.get_current_yaw(), self.cam.get_current_pitch() + rot_amount)
 
         def down(event):
-            self.cam.rotate(self.cam.current_yaw, self.cam.current_pitch - rot_amount)
+            self.cam.rotate(self.cam.get_current_yaw(), self.cam.get_current_pitch() - rot_amount)
 
         def left(event):
-            self.cam.rotate(self.cam.current_yaw - rot_amount, self.cam.current_pitch)
+            self.cam.rotate(self.cam.get_current_yaw() - rot_amount, self.cam.get_current_pitch())
 
         def right(event):
-            self.cam.rotate(self.cam.current_yaw + rot_amount, self.cam.current_pitch)
+            self.cam.rotate(self.cam.get_current_yaw() + rot_amount, self.cam.get_current_pitch())
 
         self.parent.bind("<Up>", up)
         self.parent.bind("<Down>", down)
