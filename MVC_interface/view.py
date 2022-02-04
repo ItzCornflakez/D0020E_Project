@@ -1,5 +1,6 @@
 from tkinter.ttk import *
 from tkinter import ttk
+from turtle import color
 from MVC_interface.model import Model
 
 from observer_pattern.observer import Observer
@@ -26,6 +27,7 @@ class View(ttk.Frame, Observer):
         #StyleSheet for buttons
         style = Style()
         style.configure(style="BW.TButton", foreground="black", background="white")
+        style.configure(style="A.TButton", foreground="red", background="black")
         style.configure(style="S.TLabel", font=("Arial", 25))
 
         app = Frame()
@@ -66,7 +68,7 @@ class View(ttk.Frame, Observer):
             self.old_value = self.val
 
         self.follow_person_dropdown = Combobox()
-        self.follow_person_Button = Button(text="Follow person",command=followWideFind, style="BW.TButton")
+        self.follow_person_Button = Button(text="Follow person",command=followWideFind, style="A.TButton")
 
         #TODO-use below for look at person functionality
         self.look_at_person_dropdown = Combobox()
@@ -104,18 +106,12 @@ class View(ttk.Frame, Observer):
 
 
     def set_controller(self, controller):
-            """
-            Set the controller
-            :param controller:
-            :return:
-            """
-            self.controller = controller
+
+        self.controller = controller
     
 
     def update(self, subject: Model) -> None:
-        """
-        Receive update from subject.
-        """
+
         self.lmain.configure(image=subject.imgtk)
         self.lmain.imgtk = subject.imgtk
 

@@ -8,8 +8,10 @@ from widefind import WideFind
 
 class Controller(Subject, Observer):
     def __init__(self, parent, model, view):
+        
         self.model = model
         self.view = view
+        self.parent = parent
         self.cam = parent.cam
         self.cam_trans = parent.cam_trans
         self.trackers = []
@@ -20,6 +22,9 @@ class Controller(Subject, Observer):
         t1 = threading.Thread(target=self.changeFrameLoop)
         t1.daemon = True
         t1.start()
+
+        self.vector1X = 100
+        self.vector2Y = 100
 
         self.is_follow = False
 
@@ -65,3 +70,25 @@ class Controller(Subject, Observer):
             self.lookAtWideFind(self.view.val)
         
         self.notify()
+
+        def up(event):
+            self.vector2Y += 3
+            self.cam.rotate(self.vector1X, self.vector2Y)
+        
+        def down(event):   
+            self.vector2Y -= 3
+            self.cam.rotate(self.vector1X, self.vector2Y)
+        
+        def left(event):
+            self.vector1X -= 3
+            self.cam.rotate(self.vector1X, self.vector2Y)
+        
+        def right(event):
+            self.vector1X += 3
+            self.cam.rotate(self.vector1X, self.vector2Y)
+        
+        self.parent.bind("<Up>", up)
+        self.parent.bind("<Down>", down)
+        self.parent.bind("<Left>", left)
+        self.parent.bind("<Right>", right)
+        self.parent.focus_set()
