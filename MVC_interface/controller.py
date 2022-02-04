@@ -23,6 +23,7 @@ class Controller(Subject, Observer):
         t1.start()
 
         rot_amount = 6
+        self.cam.current_pitch = 120  # 0 - 90 is the same
 
         def up(event):
             self.cam.rotate(self.cam.current_yaw, self.cam.current_pitch + rot_amount)

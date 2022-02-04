@@ -24,8 +24,6 @@ class HDIntegratedCamera:
         self.current_yaw = 0
         self.current_pitch = 0
 
-        self.rotate(self.current_yaw, self.current_pitch)
-
     @staticmethod
     def convert_degrees(degrees: int, conv: float) -> str:
         """Converts degrees to hexadecimal for rotation command to HD Integrated Camera"""
