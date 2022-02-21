@@ -11,11 +11,17 @@
         $(function() {
           $('a#rotate').on('click', function(e) {
             e.preventDefault()
-            $.getJSON('/rotate',
-                function(data) {
-              //do nothing
+            var i = document.getElementById("rotate_input_i").value;
+            var j = document.getElementById("rotate_input_j").value;
+            req = $.ajax({
+              url:'/rotate',
+              type: 'POST',
+              contentType: 'application/json',
+              dataType: 'json',
+              data: JSON.stringify({i:i, j:j})
             });
-            return false;
+            req.done(function(){
+            });
           });
         });
         $(function() {
@@ -57,18 +63,23 @@
             });
             return false;
           });
-        });      
+        });    
 </script>
 
 <div class='container'>
     <h3>Test</h3>
         <form>
-            <a href=# id=rotate><button class='btn btn-default'>Rotate</button></a>
+          <input type="text" name="rotate_input_i" id="rotate_input_i" value="" />
+          <input type="text" name="rotate_input_j" id="rotate_input_j" value="" />
+          <a href=# id=rotate><button class='btn btn-default'>Rotate</button></a>
+        </form>
+        <form>
             <a href=# id=follow><button class='btn btn-default'>Follow</button></a>
             <a href=# id=look><button class='btn btn-default'>Look at</button></a>
             <a href=# id=switch><button class='btn btn-default'>Switch camera</button></a>
             <a href=# id=disconnect><button class='btn btn-default'>Disconnect</button></a>
         </form>
+        
 
 </div>
 </body>

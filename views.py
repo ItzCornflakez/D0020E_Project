@@ -1,14 +1,19 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
+from test_controller import Controller
 
 views = Blueprint('views', __name__)
+controller = Controller()
 
 @views.route('/')
 def home():
     return render_template('/test.html')
-
-@views.route('/rotate')
+    
+@views.route('/rotate', methods=['POST'])
 def rotate():
-    print ("rotate")
+    jsonData = request.get_json()
+    i = int(jsonData['i'])
+    j = int(jsonData['j'])    
+    controller.rotate(i,j) 
     return ("nothing")
 
 @views.route('/follow')
