@@ -29,6 +29,10 @@ def rotate():
     controller.rotate(i,j) 
     return ("nothing")
 
+@views.route('/video_feed')
+def video_feed():
+    return Response(controller.changeFrameLoop(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
 @views.route('/follow')
 def follow():
     print ("follow")
