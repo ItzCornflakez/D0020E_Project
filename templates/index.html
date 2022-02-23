@@ -33,7 +33,14 @@
 	    <!--<video autoplay="true" class="videoElement">-->
         <!-- Video goes here -->
 	    <!--</video>-->
-      <img src="{{ url_for('views.video_feed') }}" width="100%">
+
+      <!-- <img src="{{ url_for('views.video_feed') }}" width="100%"> -->
+
+      <!-- THIS ONLY WORKS IN FIREFOX -->
+      <!-- This row of code is the only necessary row. Remove all video related stuff except styling -->
+      <img src="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1" alt="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1" width="1280" height="720">
+
+
       <!-- HUD -->
 
       <div class="footer">

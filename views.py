@@ -41,7 +41,7 @@ def follow():
 @views.route('/look/<tracker>')
 def look(tracker):
     controller.lookAtWideFind(tracker)
-    return ('', 204)
+    return ('', 204)  # Return "204 No Content"
 
 @views.route('/switch')
 def switch():
