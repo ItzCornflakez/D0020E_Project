@@ -36,12 +36,12 @@ def video_feed():
 @views.route('/follow')
 def follow():
     print ("follow")
-    return ("nothing")
+    return ('', 204)
 
-@views.route('/look')
-def look():
-    print ("look")
-    return ("nothing")
+@views.route('/look/<tracker>')
+def look(tracker):
+    controller.lookAtWideFind(tracker)
+    return ('', 204)
 
 @views.route('/switch')
 def switch():

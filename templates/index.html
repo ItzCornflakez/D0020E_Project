@@ -43,7 +43,7 @@
             <!-- TODO: Printing loop to show connected persons -->
             <form>
               <a>Yaw: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="yaw" id="yaw" min="0" max="360"></a>
-              <a>Pitch: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="pitch" id="pitch" min="180" max="360"></a>
+              <a>Pitch: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="pitch" id="pitch" min="90" max="180"></a>
               <a href=# id=rotate><button class='button bottomRow'>Rotate</button></a>
             </form>
           </div>
@@ -64,7 +64,7 @@
           <div class="dropdown-content">
             <!-- TODO: Printing loop to show connected persons -->
             {% for tracker in widefindTrackers.keys() %}
-              <a>{{ tracker }}</a>
+              <a href="/look/{{ tracker }}">{{ tracker }}</a>
             {% endfor %}
             <a>Placeholder</a>
           </div>
