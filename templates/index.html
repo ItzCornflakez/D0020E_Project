@@ -4,10 +4,29 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- TODO: Change title -->
     <title>D0020E - Group 10</title>
   <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
   <body>
+    <script type=text/javascript>
+      $(function() {
+        $('a#rotate').on('click', function(e) {
+          e.preventDefault()
+          var i = document.getElementById("yaw").value;
+          var j = document.getElementById("pitch").value;
+          req = $.ajax({
+            url:'/rotate',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({i:i, j:j})
+          });
+          req.done(function(){
+          });
+        });
+      });
+    </script>
     <div class="video-container">
 
 
@@ -22,10 +41,10 @@
           <button class="button bottomRow">Rotate camera</button>
           <div class="dropdown-content">
             <!-- TODO: Printing loop to show connected persons -->
-            <form action="">
-              <a>Yaw: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="yaw" min="0" max="360"></a>
-              <a>Pitch: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="pitch" min="180" max="360"></a>
-              <input class="button bottomRow" type="submit" value="Send">
+            <form>
+              <a>Yaw: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="yaw" id="yaw" min="0" max="360"></a>
+              <a>Pitch: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="pitch" id="pitch" min="180" max="360"></a>
+              <a href=# id=rotate><button class='button bottomRow'>Rotate</button></a>
             </form>
           </div>
         </div>
