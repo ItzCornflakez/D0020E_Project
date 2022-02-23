@@ -25,4 +25,6 @@ class Controller(Observer):
 
     
     def update(self, subject: WideFind):
-        pass
+        self.trackersDict = subject.trackers
+        self.trackers = subject.trackers.keys()
+        
