@@ -8,17 +8,18 @@ controller = Controller()
 try: 
     widefind = wf.WideFind("130.240.74.55", 1883)
     widefind.run("ltu-system/#", False)
+    widefind.attach(controller)
 except:
     raise RuntimeError('Could not connect to WideFind')
 else:
     print("WideFind connected")
 
-widefind.attach(controller)
+
 
 
 @views.route('/')
 def home():
-    return render_template('/index.html', widefindTrackers = widefind.trackers) #LAST PART NOT MVC
+    return render_template('/index.html', widefindTrackers = controller.trackersDict)
     
 @views.route('/rotate', methods=['POST'])
 def rotate():
@@ -50,16 +51,16 @@ def disconnect():
 
 
 
-#WideFind stuff( NOT MVC)
+#WideFind stuff
 @views.route("/getWidefind")
 def getWidefind():
-    response = widefind.trackers
+    response = controller.trackersDict
     return Response(str(response))
 
 @views.route("/getWidefindCoordinates")
 @views.route("/getWidefindCoordinates/<wfID>")
 def getWidefindCoordinates(wfID):
-    response = widefind.trackers.get(wfID)
+    response = controller.trackersDict.get(wfID)
     print(response)
     return Response(str(response))
 
