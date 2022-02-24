@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <!-- TODO: Change title -->
-    <title>D0020E - Group 10</title>
-  <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
-  <body>
-    <script type=text/javascript>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!-- TODO: Change title -->
+  <title>D0020E - Group 10</title>
+  <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script>
+</head>
+
+<body>
+  <script type=text/javascript>
       $(function() {
         $('a#rotate').on('click', function(e) {
           e.preventDefault()
@@ -27,87 +30,103 @@
         });
       });
     </script>
-    <div class="video-container">
+  <div class="video-container">
 
 
-	    <!--<video autoplay="true" class="videoElement">-->
-        <!-- Video goes here -->
-	    <!--</video>-->
+    <!--<video autoplay="true" class="videoElement">-->
+    <!-- Video goes here -->
+    <!--</video>-->
 
-      <!-- <img src="{{ url_for('views.video_feed') }}" width="100%"> -->
+    <!-- <img src="{{ url_for('views.video_feed') }}" width="100%"> -->
 
-      <!-- THIS ONLY WORKS IN FIREFOX -->
-      <!-- This row of code is the only necessary row. Remove all video related stuff except styling -->
-      <img src="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1" alt="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1" width="1280" height="720">
+    <!-- THIS ONLY WORKS IN FIREFOX -->
+    <!-- This row of code is the only necessary row. Remove all video related stuff except styling -->
+    <img src="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+      alt="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1" width="1280"
+      height="720">
 
 
-      <!-- HUD -->
+    <!-- HUD -->
 
-      <div class="footer">
-        <div class="dropdown">
-          <button class="button bottomRow">Rotate camera</button>
-          <div class="dropdown-content">
-            <!-- TODO: Printing loop to show connected persons -->
-            <form>
-              <a>Yaw: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="yaw" id="yaw" min="0" max="360"></a>
-              <a>Pitch: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="pitch" id="pitch" min="90" max="180"></a>
-              <a href=# id=rotate><button class='button bottomRow'>Rotate</button></a>
-            </form>
-          </div>
-        </div>
-
-        <!-- 3 dropdown buttons -->
-        <div class="dropdown">
-          <button class="button bottomRow">Follow person</button>
-          <div class="dropdown-content">
-            <!-- TODO: Printing loop to show connected persons -->
-            {% for tracker in widefindTrackers.keys() %}
-              <a href="/follow/{{ tracker }}">{{ tracker }}</a>
-            {% endfor %}
-            <a>Maja</a>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button class="button bottomRow">Look at person</button>
-          <div class="dropdown-content">
-            <!-- TODO: Printing loop to show connected persons -->
-            {% for tracker in widefindTrackers.keys() %}
-              <a href="/look/{{ tracker }}">{{ tracker }}</a>
-            {% endfor %}
-            <a>Placeholder</a>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button class="button bottomRow">Change camera</button>
-          <div class="dropdown-content">
-            <!-- TODO: Printing loop to show connected persons -->
-            <a>Camera 1</a>
-            <a>Camera 2</a>
-          </div>
+    <div class="footer">
+      <div class="dropdown">
+        <button class="button bottomRow">Rotate camera</button>
+        <div class="dropdown-content">
+          <!-- TODO: Printing loop to show connected persons -->
+          <form>
+            <a>Yaw: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="yaw"
+                id="yaw" min="0" max="360"></a>
+            <a>Pitch: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="pitch"
+                id="pitch" min="90" max="180"></a>
+            <a href=# id=rotate><button class='button bottomRow'>Rotate</button></a>
+          </form>
         </div>
       </div>
 
-      <div class="arrfooter">
-        <div class="keys">
-          <div class="zoomIn arr"><em class="fa fa-search-plus"></em></div>
-          <div class="up arr"><em class="fa fa-arrow-up"></em></div>
-          <div class="zoomOut arr"><em class="fa fa-search-minus"></em></div>
-          <br />
-          <div class="left arr"><em class="fa fa-arrow-left"></em></div>
-          <div class="down arr"><em class="fa fa-arrow-down"></em></div>
-          <div class="right arr"><em class="fa fa-arrow-right"></em></div>
+      <!-- 3 dropdown buttons -->
+      <div class="dropdown">
+        <button class="button bottomRow">Follow person</button>
+        <div class="dropdown-content">
+          <!-- TODO: Printing loop to show connected persons -->
+          {% for tracker in widefindTrackers.keys() %}
+          <a onclick="follow('{{ tracker }}')">{{ tracker }}</a>
+          {% endfor %}
+          <a>Maja</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="button bottomRow">Look at person</button>
+        <div class="dropdown-content">
+          <!-- TODO: Printing loop to show connected persons -->
+          {% for tracker in widefindTrackers.keys() %}
+          <a onclick="lookAt('{{ tracker }}')">{{ tracker }}</a>
+          {% endfor %}
+          <a>Placeholder</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="button bottomRow">Change camera</button>
+        <div class="dropdown-content">
+          <!-- TODO: Printing loop to show connected persons -->
+          <a>Camera 1</a>
+          <a>Camera 2</a>
         </div>
       </div>
     </div>
-  </body>
 
-  <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6def2fec4d251691',m:'gqZwj672um515pQmRHaYs4XfkVW1J5jOY8J0rs1ODU4-1645102706-0-ARBsSprk1uRQp/ejKkoKtEFUu9q9Yw6ieetRS1dmVn11lYjqNCsGalNH6zU86/3xKF/xYtfvZIf7AcJCFmC/sWBhgCzhVhCaeABea8iOs9k5oCtT6SNoI/9XN/cTdSPHnXXE2S75msnSdYlA0fl0NKwCojFidUsBYnPtkrJJ13qQxADhP7y0TxfjKKXuiBfheg==',s:[0x56dd5cc53f,0xdcaf6c87fa],}})();</script>
+    <div class="arrfooter">
+      <div class="keys">
+        <div class="zoomIn arr"><em class="fa fa-search-plus"></em></div>
+        <div class="up arr"><em class="fa fa-arrow-up"></em></div>
+        <div class="zoomOut arr"><em class="fa fa-search-minus"></em></div>
+        <br />
+        <div class="left arr"><em class="fa fa-arrow-left"></em></div>
+        <div class="down arr"><em class="fa fa-arrow-down"></em></div>
+        <div class="right arr"><em class="fa fa-arrow-right"></em></div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script
+  type="text/javascript">(function () { window['__CF$cv$params'] = { r: '6def2fec4d251691', m: 'gqZwj672um515pQmRHaYs4XfkVW1J5jOY8J0rs1ODU4-1645102706-0-ARBsSprk1uRQp/ejKkoKtEFUu9q9Yw6ieetRS1dmVn11lYjqNCsGalNH6zU86/3xKF/xYtfvZIf7AcJCFmC/sWBhgCzhVhCaeABea8iOs9k5oCtT6SNoI/9XN/cTdSPHnXXE2S75msnSdYlA0fl0NKwCojFidUsBYnPtkrJJ13qQxADhP7y0TxfjKKXuiBfheg==', s: [0x56dd5cc53f, 0xdcaf6c87fa], } })();</script>
+
+<script>
+  function lookAt(target) {
+    var s = "/look/" + target
+    fetch(s)
+  }
+
+  function follow(target) {
+    var s = "/follow/" + target
+    fetch(s)
+  }
 
 
 
-
+</script>
 
 
 </html>
