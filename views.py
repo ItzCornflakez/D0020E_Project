@@ -16,7 +16,7 @@ else:
 
 @views.route('/')
 def home():
-    return render_template('/index.html', widefindTrackers = controller.trackersDict)
+    return render_template('/index.html', src = controller.src, widefindTrackers = controller.trackersDict)
     
 @views.route('/rotate', methods=['POST'])
 def rotate():
@@ -40,10 +40,16 @@ def follow(tracker):
     print ("follow")
     return ('', 204)
 
-@views.route('/switch')
-def switch():
-    print ("switch")
-    return ("nothing")
+@views.route('/switch/<cam>')
+def switch(cam):
+    controller.switchCam(cam)
+    print(cam)
+    if(cam == "Kitchen"):
+        controller.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+    if(cam == "Bedroom"):
+        controller.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+    response = controller.src
+    return Response(str(response))
 
 @views.route('/disconnect')
 def disconnect():

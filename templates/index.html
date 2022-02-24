@@ -32,17 +32,10 @@
     </script>
   <div class="video-container">
 
-
-    <!--<video autoplay="true" class="videoElement">-->
-    <!-- Video goes here -->
-    <!--</video>-->
-
-    <!-- <img src="{{ url_for('views.video_feed') }}" width="100%"> -->
-
     <!-- THIS ONLY WORKS IN FIREFOX -->
     <!-- This row of code is the only necessary row. Remove all video related stuff except styling -->
-    <img src="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
-      alt="http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1" width="1280"
+    <img src="{{ src }}"
+      alt="{{ src }}" width="1280"
       height="720">
 
 
@@ -90,8 +83,8 @@
         <button class="button bottomRow">Change camera</button>
         <div class="dropdown-content">
           <!-- TODO: Printing loop to show connected persons -->
-          <a>Camera 1</a>
-          <a>Camera 2</a>
+          <a onclick="switchCam('Kitchen')">Kitchen</a>
+          <a onclick="switchCam('Bedroom')">Bedroom</a>
         </div>
       </div>
     </div>
@@ -114,6 +107,7 @@
   type="text/javascript">(function () { window['__CF$cv$params'] = { r: '6def2fec4d251691', m: 'gqZwj672um515pQmRHaYs4XfkVW1J5jOY8J0rs1ODU4-1645102706-0-ARBsSprk1uRQp/ejKkoKtEFUu9q9Yw6ieetRS1dmVn11lYjqNCsGalNH6zU86/3xKF/xYtfvZIf7AcJCFmC/sWBhgCzhVhCaeABea8iOs9k5oCtT6SNoI/9XN/cTdSPHnXXE2S75msnSdYlA0fl0NKwCojFidUsBYnPtkrJJ13qQxADhP7y0TxfjKKXuiBfheg==', s: [0x56dd5cc53f, 0xdcaf6c87fa], } })();</script>
 
 <script>
+
   function lookAt(target) {
     var s = "/look/" + target
     fetch(s)
@@ -123,10 +117,11 @@
     var s = "/follow/" + target
     fetch(s)
   }
-
-
+  function switchCam(target) {
+    var s = "/switch/" + target
+    document.location.reload()
+    fetch(s)
+  }
 
 </script>
-
-
 </html>

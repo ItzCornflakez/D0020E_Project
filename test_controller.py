@@ -1,3 +1,4 @@
+from re import X
 from camera import HDIntegratedCamera
 from observer_pattern.observer import Observer, Subject
 import numpy
@@ -8,6 +9,8 @@ import widefind as wf
 
 class Controller(Observer):
     def __init__(self):
+
+        self.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
 
         camera_bedroom_pos = numpy.array([619, 3935, 2600])
         camera_bedroom_zero = numpy.array([-765, 4112, 2878])
@@ -39,6 +42,13 @@ class Controller(Observer):
 
     def followWideFind(self, val):
         self.followTarget = val
+
+    def switchCam(self, cam):
+        if(cam == "Kitchen"):
+            self.cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
+        if(cam == "Bedroom"):
+            self.cam = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23")
+
 
     def update(self, subject: WideFind):
         self.trackersDict = subject.trackers
