@@ -14,9 +14,6 @@ except:
 else:
     print("WideFind connected")
 
-
-
-
 @views.route('/')
 def home():
     return render_template('/index.html', widefindTrackers = controller.trackersDict)
@@ -29,11 +26,6 @@ def rotate():
     j = int(jsonData['j'])    
     controller.rotate(i,j) 
     return ("nothing")
-
-@views.route('/video_feed')
-def video_feed():
-    return Response(controller.changeFrameLoop(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 @views.route('/look/<tracker>')
 def look(tracker):
@@ -57,8 +49,6 @@ def switch():
 def disconnect():
     print ("disconnect")
     return ("nothing")
-
-
 
 #WideFind stuff
 @views.route("/getWidefind")
