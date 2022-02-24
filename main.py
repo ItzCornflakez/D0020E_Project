@@ -19,16 +19,11 @@ class Main(Observer, ABC):
 
         widefind = wf.WideFind("130.240.74.55", 1883)
         widefind.attach(self)
-        widefind.run("ltu-system/#", True)
+        widefind.run("ltu-system/#", False)
 
     def update(self, subject: wf.WideFind) -> None:
-
-        if self.current_tracker in subject.trackers.keys():
-            tracker_pos = subject.trackers[self.current_tracker]
-            new_yaw = self.camera_transform.get_yaw_from_zero(tracker_pos)
-            new_pitch = self.camera_transform.get_pitch_from_zero(tracker_pos)
-
-            self.camera.rotate(new_yaw, new_pitch + 80)
+        self.camera.zoom(0)
+        print("Zooming")
 
 
 # This is a makeshift test script.
