@@ -1,8 +1,6 @@
 from camera import HDIntegratedCamera
 from observer_pattern.observer import Observer, Subject
 import numpy
-import cv2
-from video_get import VideoGet
 
 from widefind import WideFind
 import widefind as wf
@@ -23,8 +21,7 @@ class Controller(Observer):
         self.cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
         self.trackers = []
         self.trackersDict = {}
-        self.video_getter = VideoGet("rtsp://130.240.105.144:554/mediainput/h264/stream_1").start()
-
+     
         self.followTarget = ""
 
         self.is_follow = False
@@ -43,15 +40,6 @@ class Controller(Observer):
     def followWideFind(self, val):
         self.followTarget = val
 
-    def changeFrameLoop(self):
-        while True:
-            frame = self.video_getter.frame
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-    
     def update(self, subject: WideFind):
         self.trackersDict = subject.trackers
         self.trackers = subject.trackers.keys()
