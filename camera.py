@@ -11,6 +11,7 @@ class HDIntegratedCamera:
     class Commands:
         """Contains strings for different commands the camera accepts."""
         ROTATE = "APC"
+        ZOOM = "AXZ"
 
     class Status:
         """Contains status values from camera."""
@@ -42,7 +43,6 @@ class HDIntegratedCamera:
 
         self.__current_pitch = new_pitch
 
-
     @staticmethod
     def convert_degrees(degrees: int, conv: float) -> str:
         """Converts degrees to hexadecimal for rotation command to HD Integrated Camera"""
@@ -52,6 +52,12 @@ class HDIntegratedCamera:
         degrees += (int("0x2d08", 16)-5)
         degrees = hex(degrees)
         return str(degrees)[2:].upper()
+
+    @staticmethod
+    def convert_zoom(new_zoom: int):
+        clamped_input = max(0, min(100, new_zoom))
+        res = hex(int(1365 + clamped_input * 27.30))
+        return res[2:].upper()
 
     def rotate(self, new_yaw: int, new_pitch: int):
         """Rotate camera relative to zero pointer"""
@@ -67,3 +73,14 @@ class HDIntegratedCamera:
 
         self.set_current_yaw(new_yaw)
         self.set_current_pitch(new_pitch)
+
+    def zoom(self, new_zoom: int):
+        """takes an integer representing the zoom-percent"""
+        url = self.__BASEURL + self.Commands.ZOOM
+        url += self.convert_zoom(new_zoom)
+        url += "&res=1"
+
+        req = requests.get(url=url)
+
+        if req.status_code != self.Status.OK:
+            raise Exception("Communication with camera failed")
