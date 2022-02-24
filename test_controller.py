@@ -25,6 +25,8 @@ class Controller(Observer):
         self.trackersDict = {}
         self.video_getter = VideoGet("rtsp://130.240.105.144:554/mediainput/h264/stream_1").start()
 
+        self.followTarget = ""
+
         self.is_follow = False
 
     def rotate(self, i, j):
@@ -38,6 +40,9 @@ class Controller(Observer):
 
             self.cam.rotate(new_yaw, new_pitch + 80)
 
+    def followWideFind(self, val):
+        self.followTarget = val
+
     def changeFrameLoop(self):
         while True:
             frame = self.video_getter.frame
@@ -50,4 +55,7 @@ class Controller(Observer):
     def update(self, subject: WideFind):
         self.trackersDict = subject.trackers
         self.trackers = subject.trackers.keys()
+        if(self.is_follow == True):
+            if(self.followTarget in self.trackers):
+                self.lookAtWideFind(self.followTarget)
         

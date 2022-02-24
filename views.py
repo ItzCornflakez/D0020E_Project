@@ -23,6 +23,7 @@ def home():
     
 @views.route('/rotate', methods=['POST'])
 def rotate():
+    controller.is_follow = False
     jsonData = request.get_json()
     i = int(jsonData['i'])
     j = int(jsonData['j'])    
@@ -33,15 +34,19 @@ def rotate():
 def video_feed():
     return Response(controller.changeFrameLoop(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@views.route('/follow')
-def follow():
-    print ("follow")
-    return ('', 204)
 
 @views.route('/look/<tracker>')
 def look(tracker):
+    controller.is_follow = False
     controller.lookAtWideFind(tracker)
     return ('', 204)  # Return "204 No Content"
+
+@views.route('/follow/<tracker>')
+def follow(tracker):
+    controller.is_follow = True
+    controller.followWideFind(tracker)
+    print ("follow")
+    return ('', 204)
 
 @views.route('/switch')
 def switch():

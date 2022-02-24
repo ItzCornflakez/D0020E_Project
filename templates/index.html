@@ -61,7 +61,9 @@
           <button class="button bottomRow">Follow person</button>
           <div class="dropdown-content">
             <!-- TODO: Printing loop to show connected persons -->
-            <a>Kalle</a>
+            {% for tracker in widefindTrackers.keys() %}
+              <a href="/follow/{{ tracker }}">{{ tracker }}</a>
+            {% endfor %}
             <a>Maja</a>
           </div>
         </div>
