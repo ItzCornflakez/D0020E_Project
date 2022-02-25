@@ -56,6 +56,32 @@ def disconnect():
     print ("disconnect")
     return ("nothing")
 
+#Manual control stuff
+@views.route('/up')
+def up():
+    controller.up()
+    print ("up")
+    return ('', 204)
+
+@views.route('/down')
+def down():
+    controller.down()
+    print ("down")
+    return ('', 204)
+
+@views.route('/left')
+def left():
+    controller.left()
+    print ("left")
+    return ('', 204)
+
+@views.route('/right')
+def right():
+    controller.right()
+    print ("right")
+    return ('', 204)
+
+
 #WideFind stuff
 @views.route("/getWidefind")
 def getWidefind():

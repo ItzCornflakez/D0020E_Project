@@ -24,9 +24,10 @@ class Controller(Observer):
         self.cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
         self.trackers = []
         self.trackersDict = {}
+
+        self.rot_amount = 6
      
         self.followTarget = ""
-
         self.is_follow = False
 
     def rotate(self, i, j):
@@ -48,6 +49,18 @@ class Controller(Observer):
             self.cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
         if(cam == "Bedroom"):
             self.cam = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23")
+
+    def up(self):
+        self.cam.rotate(self.cam.get_current_yaw(), self.cam.get_current_pitch() + self.rot_amount)
+
+    def down(self):
+        self.cam.rotate(self.cam.get_current_yaw(), self.cam.get_current_pitch() - self.rot_amount)
+
+    def left(self):
+        self.cam.rotate(self.cam.get_current_yaw() - self.rot_amount, self.cam.get_current_pitch())
+
+    def right(self):
+        self.cam.rotate(self.cam.get_current_yaw() + self.rot_amount, self.cam.get_current_pitch())
 
 
     def update(self, subject: WideFind):

@@ -92,12 +92,12 @@
     <div class="arrfooter">
       <div class="keys">
         <div class="zoomIn arr"><em class="fa fa-search-plus"></em></div>
-        <div class="up arr"><em class="fa fa-arrow-up"></em></div>
+        <div class="up arr" onclick="up()"><em class="fa fa-arrow-up"></em></div>
         <div class="zoomOut arr"><em class="fa fa-search-minus"></em></div>
         <br />
-        <div class="left arr"><em class="fa fa-arrow-left"></em></div>
-        <div class="down arr"><em class="fa fa-arrow-down"></em></div>
-        <div class="right arr"><em class="fa fa-arrow-right"></em></div>
+        <div class="left arr" onclick="left()"><em class="fa fa-arrow-left"></em></div>
+        <div class="down arr" onclick="down()"><em class="fa fa-arrow-down"></em></div>
+        <div class="right arr" onclick="right()"><em class="fa fa-arrow-right"></em></div>
       </div>
     </div>
   </div>
@@ -120,6 +120,26 @@
   function switchCam(target) {
     var s = "/switch/" + target
     document.location.reload()
+    fetch(s)
+  }
+
+  function up() {
+    var s = "/up"
+    fetch(s)
+  }
+
+  function down() {
+    var s = "/down"
+    fetch(s)
+  }
+
+  function left() {
+    var s = "/left"
+    fetch(s)
+  }
+
+  function right() {
+    var s = "/right"
     fetch(s)
   }
 
