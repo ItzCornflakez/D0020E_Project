@@ -143,5 +143,20 @@
     fetch(s)
   }
 
+  document.addEventListener("keydown" , function(e){
+    if(e.keyCode == 37 || e.keyCode == 65 ) {
+      left();
+    }
+    else if(e.keyCode == 38 || e.keyCode == 87 ) {
+      up();
+    }
+    else if (e.keyCode == 39 || e.keyCode == 68 ) {
+      right();
+    }
+    else if (e.keyCode == 40 || e.keyCode == 83 )  {
+      down();
+    }
+  });
+
 </script>
 </html>
