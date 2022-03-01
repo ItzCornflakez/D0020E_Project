@@ -1,3 +1,4 @@
+from xml.dom.minidom import Document
 from flask import Blueprint, render_template, request, Response, make_response
 from test_controller import Controller
 import widefind as wf
@@ -16,6 +17,7 @@ else:
 
 @views.route('/')
 def home():
+    print ("this is controller src:" + str(controller.src))
     return render_template('/index.html', src = controller.src, widefindTrackers = controller.trackersDict)
     
 @views.route('/rotate', methods=['POST'])
@@ -40,16 +42,14 @@ def follow(tracker):
     print ("follow")
     return ('', 204)
 
-@views.route('/switch/<cam>')
-def switch(cam):
+@views.route('/switchCam/<cam>')
+def switchCam(cam):
     controller.switchCam(cam)
-    print(cam)
     if(cam == "Kitchen"):
         controller.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
     if(cam == "Bedroom"):
         controller.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
-    response = controller.src
-    return Response(str(response))
+    return('', 204)
 
 @views.route('/disconnect')
 def disconnect():

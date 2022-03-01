@@ -36,7 +36,7 @@
     <!-- This row of code is the only necessary row. Remove all video related stuff except styling -->
     <img src="{{ src }}"
       alt="{{ src }}" width="1280"
-      height="720">
+      height="720" id="feed">
 
 
     <!-- HUD -->
@@ -117,12 +117,19 @@
     var s = "/follow/" + target
     fetch(s)
   }
-  function switchCam(target) {
-    var s = "/switch/" + target
-    document.location.reload()
+  function switchCam(cam) {
+    var s = "/switchCam/" + cam
     fetch(s)
+    var img = document.getElementById("feed")
+    if(cam == "Bedroom"){
+      img.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+      img.alt = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+    }
+    else{
+      img.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+      img.alt = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+    }
   }
-
   function up() {
     var s = "/up"
     fetch(s)
