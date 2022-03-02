@@ -46,9 +46,9 @@ def follow(tracker):
 def switchCam(cam):
     controller.switchCam(cam)
     if(cam == "Kitchen"):
-        controller.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+        controller.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
     if(cam == "Bedroom"):
-        controller.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+        controller.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
     return('', 204)
 
 @views.route('/disconnect')

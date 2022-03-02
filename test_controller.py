@@ -10,7 +10,7 @@ import widefind as wf
 class Controller(Observer):
     def __init__(self):
 
-        self.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+        self.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
 
         camera_bedroom_pos = numpy.array([619, 3935, 2600])
         camera_bedroom_zero = numpy.array([-765, 4112, 2878])

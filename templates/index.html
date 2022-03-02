@@ -35,9 +35,22 @@
     <!-- THIS ONLY WORKS IN FIREFOX -->
     <!-- This row of code is the only necessary row. Remove all video related stuff except styling -->
     <img src="{{ src }}"
-      alt="{{ src }}" width="1280"
-      height="720" id="feed">
+      alt="{{ src }}" width="1920"
+      height="1080" id="feed">
 
+      <script>
+        var img = document.getElementById("feed")
+        var win = window,
+        doc = document,
+        docElem = doc.documentElement,
+        body = doc.getElementsByTagName('body')[0],
+        x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+        y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+
+        img.height = y
+        img.width = x
+        
+      </script>
 
     <!-- HUD -->
 
@@ -122,12 +135,12 @@
     fetch(s)
     var img = document.getElementById("feed")
     if(cam == "Bedroom"){
-      img.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
-      img.alt = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+      img.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
+      img.alt = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
     }
     else{
-      img.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
-      img.alt = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1280x720&amp;framerate=5&amp;quality=1"
+      img.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
+      img.alt = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
     }
   }
   function up() {
