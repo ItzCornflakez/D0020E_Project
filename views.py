@@ -8,7 +8,7 @@ controller = Controller()
 
 try: 
     widefind = wf.WideFind("130.240.74.55", 1883)
-    widefind.run("ltu-system/#", False)
+    widefind.run("ltu-system/#", True)
     widefind.attach(controller)
 except:
     raise RuntimeError('Could not connect to WideFind')
@@ -79,6 +79,18 @@ def left():
 def right():
     controller.right()
     print ("right")
+    return ('', 204)
+
+@views.route('/zoomIn')
+def zoomIn():
+    controller.zoomIn()
+    print ("Zoom in")
+    return ('', 204)
+
+@views.route('/zoomOut')
+def zoomOut():
+    controller.zoomOut()
+    print ("Zoom out")
     return ('', 204)
 
 

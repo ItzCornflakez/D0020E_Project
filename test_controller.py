@@ -22,6 +22,9 @@ class Controller(Observer):
 
         self.cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
         self.cam_trans = wf.Transform(camera_kitchen_pos, camera_kitchen_zero, camera_kitchen_floor)
+
+        self.rotate(210, 140)
+
         self.trackers = []
         self.trackersDict = {}
 
@@ -61,6 +64,12 @@ class Controller(Observer):
 
     def right(self):
         self.cam.rotate(self.cam.get_current_yaw() + self.rot_amount, self.cam.get_current_pitch())
+
+    def zoomIn(self):
+        self.cam.zoom(50)
+
+    def zoomOut(self):
+        self.cam.zoom(0)
 
 
     def update(self, subject: WideFind):

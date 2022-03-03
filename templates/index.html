@@ -104,9 +104,9 @@
 
     <div class="arrfooter">
       <div class="keys">
-        <div class="zoomIn arr"><em class="fa fa-search-plus"></em></div>
+        <div class="zoomIn arr" onclick="zoomIn()"><em class="fa fa-search-plus"></em></div>
         <div class="up arr" onclick="up()"><em class="fa fa-arrow-up"></em></div>
-        <div class="zoomOut arr"><em class="fa fa-search-minus"></em></div>
+        <div class="zoomOut arr" onclick="zoomOut()"><em class="fa fa-search-minus"></em></div>
         <br />
         <div class="left arr" onclick="left()"><em class="fa fa-arrow-left"></em></div>
         <div class="down arr" onclick="down()"><em class="fa fa-arrow-down"></em></div>
@@ -160,6 +160,16 @@
 
   function right() {
     var s = "/right"
+    fetch(s)
+  }
+
+  function zoomIn() {
+    var s = "/zoomIn"
+    fetch(s)
+  }
+
+  function zoomOut() {
+    var s = "/zoomOut"
     fetch(s)
   }
 
