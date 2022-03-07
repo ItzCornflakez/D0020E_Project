@@ -8,7 +8,7 @@ controller = Controller()
 
 try: 
     widefind = wf.WideFind("130.240.74.55", 1883)
-    widefind.run("ltu-system/#", True)
+    widefind.run("ltu-system/#", False)
     widefind.attach(controller)
 except:
     raise RuntimeError('Could not connect to WideFind')

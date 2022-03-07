@@ -56,15 +56,19 @@ class Controller(Observer):
             self.cam_trans = wf.Transform(self.camera_bedroom_pos, self.camera_bedroom_zero, self.camera_bedroom_floor)
 
     def up(self):
+        self.is_follow = False
         self.cam.rotate(self.cam.get_current_yaw(), self.cam.get_current_pitch() + self.rot_amount)
 
     def down(self):
+        self.is_follow = False
         self.cam.rotate(self.cam.get_current_yaw(), self.cam.get_current_pitch() - self.rot_amount)
 
     def left(self):
+        self.is_follow = False
         self.cam.rotate(self.cam.get_current_yaw() - self.rot_amount, self.cam.get_current_pitch())
 
     def right(self):
+        self.is_follow = False
         self.cam.rotate(self.cam.get_current_yaw() + self.rot_amount, self.cam.get_current_pitch())
 
     def zoomIn(self):
