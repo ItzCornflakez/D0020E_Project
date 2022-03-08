@@ -114,3 +114,48 @@ body {
   display: inline-block;
   margin: 2.5px;
 }
+
+/* log stuff */
+
+.log{
+  position: absolute;
+  bottom: 1%;
+  left: 1%;
+}
+
+.overButton{
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  background: grey;
+  color: white;
+  font-size: 15px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+#overlay{
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  overflow:auto;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#text{
+  position: absolute;
+  margin-top: 10%;
+  width: 70%;
+  left: 50%;
+  font-size: 40px;
+  color: white;
+  transform: translate(-50%,0);
+}

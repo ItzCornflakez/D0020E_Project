@@ -55,6 +55,7 @@
     <!-- HUD -->
 
     <div class="footer">
+
       <div class="dropdown">
         <button class="button bottomRow">Rotate camera</button>
         <div class="dropdown-content">
@@ -100,6 +101,34 @@
           <a onclick="switchCam('Bedroom')">Bedroom</a>
         </div>
       </div>
+
+      <div class="log" style="padding:20px">
+        <button class="overButton" onclick="on()">Open log</button>
+      </div>
+    
+      <div id="overlay" onclick="off()">
+          <div id="text">
+              <!-- TODO: Rubrik? -->
+              <!-- TODO: For loop för printa logen -->
+              <p>test</p>
+              <p>test2</p>
+              <p>test</p>
+              <p>test2</p>
+              <p>test</p>
+              <p>test2</p>
+              <p>test</p>
+              <p>test2</p>
+              <p>test</p>
+              <p>test2</p>
+              <p>test</p>
+              <p>test2</p>
+              <p>test</p>
+              <p>test2</p>
+              <p>test</p>
+              <p>test2</p>
+          </div>
+      </div>
+
     </div>
 
     <div class="arrfooter">
@@ -114,12 +143,22 @@
       </div>
     </div>
   </div>
+
+  
 </body>
 
 <script
   type="text/javascript">(function () { window['__CF$cv$params'] = { r: '6def2fec4d251691', m: 'gqZwj672um515pQmRHaYs4XfkVW1J5jOY8J0rs1ODU4-1645102706-0-ARBsSprk1uRQp/ejKkoKtEFUu9q9Yw6ieetRS1dmVn11lYjqNCsGalNH6zU86/3xKF/xYtfvZIf7AcJCFmC/sWBhgCzhVhCaeABea8iOs9k5oCtT6SNoI/9XN/cTdSPHnXXE2S75msnSdYlA0fl0NKwCojFidUsBYnPtkrJJ13qQxADhP7y0TxfjKKXuiBfheg==', s: [0x56dd5cc53f, 0xdcaf6c87fa], } })();</script>
 
 <script>
+
+  function on(){
+    document.getElementById("overlay").style.display = "block";
+  }
+    
+  function off(){
+    document.getElementById("overlay").style.display = "none";
+  }
 
   function lookAt(target) {
     var s = "/look/" + target
