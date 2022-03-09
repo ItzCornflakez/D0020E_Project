@@ -18,7 +18,7 @@ else:
 @views.route('/')
 def home():
     print ("this is controller src:" + str(controller.src))
-    return render_template('/index.html', src = controller.src, widefindTrackers = controller.trackersDict)
+    return render_template('/index.html', src = controller.src, log_rows = controller.log_rows, widefindTrackers = controller.trackersDict)
     
 @views.route('/rotate', methods=['POST'])
 def rotate():
@@ -26,8 +26,10 @@ def rotate():
     jsonData = request.get_json()
     i = int(jsonData['i'])
     j = int(jsonData['j'])    
-    controller.rotate(i,j) 
-    return ("nothing")
+    controller.rotate(i,j)
+    action = "has rotated to (" + str(i) + "," + str(j) + ")"
+    response = controller.databaseActions(action) 
+    return Response(str(response))
 
 @views.route('/look/<tracker>')
 def look(tracker):
@@ -49,12 +51,9 @@ def switchCam(cam):
         controller.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
     if(cam == "Bedroom"):
         controller.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
-    return('', 204)
-
-@views.route('/disconnect')
-def disconnect():
-    print ("disconnect")
-    return ("nothing")
+    action = "has switched to " + cam + ""
+    response = controller.databaseActions(action) 
+    return Response(str(response))
 
 #Manual control stuff
 @views.route('/up')
@@ -106,5 +105,4 @@ def getWidefindCoordinates(wfID):
     response = controller.trackersDict.get(wfID)
     print(response)
     return Response(str(response))
-
 

@@ -5,10 +5,14 @@ import numpy
 
 from widefind import WideFind
 import widefind as wf
+import pymysql
 
 
 class Controller(Observer):
     def __init__(self):
+        
+        self.getAllLogs()
+
 
         self.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
 
@@ -76,6 +80,31 @@ class Controller(Observer):
 
     def zoomOut(self):
         self.cam.zoom(0)
+
+    def databaseConn(self):
+        #localhost xampp phpmyadmin database
+        self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="log")
+        self.cursor = self.connection.cursor()
+
+    def getAllLogs(self):
+        self.databaseConn()
+
+        sql = "SELECT * FROM log_table"
+        self.cursor.execute(sql)
+        self.log_rows = self.cursor.fetchall()
+        self.connection.close()
+    
+    def databaseActions(self, action):
+        self.databaseConn()
+        sql = "INSERT INTO log_table(entry) VALUES('" + str(action) + "');"
+        print(sql)
+        self.cursor.execute(sql)
+        self.connection.commit()
+        self.connection.close()
+        self.getAllLogs()
+        return self.log_rows
+
+        
 
 
     def update(self, subject: WideFind):

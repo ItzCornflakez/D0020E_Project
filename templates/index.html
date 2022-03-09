@@ -109,23 +109,9 @@
       <div id="overlay" onclick="off()">
           <div id="text">
               <!-- TODO: Rubrik? -->
-              <!-- TODO: For loop för printa logen -->
-              <p>test</p>
-              <p>test2</p>
-              <p>test</p>
-              <p>test2</p>
-              <p>test</p>
-              <p>test2</p>
-              <p>test</p>
-              <p>test2</p>
-              <p>test</p>
-              <p>test2</p>
-              <p>test</p>
-              <p>test2</p>
-              <p>test</p>
-              <p>test2</p>
-              <p>test</p>
-              <p>test2</p>
+              {% for row in log_rows %}
+              <p>{{ row[1] }}</p>
+              {% endfor %}
           </div>
       </div>
 
