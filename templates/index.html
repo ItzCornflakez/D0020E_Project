@@ -113,6 +113,21 @@
               <p>{{ row[1] }}</p>
               {% endfor %}
           </div>
+          <script>
+            list = document.getElementById("text")
+            setInterval(() => {
+                fetch("{{ url_for('views.updateLog') }}").then((response) => {
+                        response.json().then((t) => {
+                          list.innerHTML = ""
+                          for(let i = 0; i < t.length; i++){
+                            let p = document.createElement('p')
+                            p.textContent = t[i]
+                            list.append(p)
+                          }
+                        });
+                });
+            }, 1000);
+          </script>
       </div>
 
     </div>

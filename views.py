@@ -1,7 +1,9 @@
+from urllib import response
 from xml.dom.minidom import Document
-from flask import Blueprint, render_template, request, Response, make_response
+from flask import Blueprint, jsonify, render_template, request, Response, make_response
 from test_controller import Controller
 import widefind as wf
+import json
 
 views = Blueprint('views', __name__)
 controller = Controller()
@@ -97,6 +99,7 @@ def zoomOut():
 @views.route("/getWidefind")
 def getWidefind():
     response = controller.trackersDict
+    print(response)
     return Response(str(response))
 
 @views.route("/getWidefindCoordinates")
@@ -106,3 +109,10 @@ def getWidefindCoordinates(wfID):
     print(response)
     return Response(str(response))
 
+@views.route("/updateLog")
+def updateLog():
+    arr = []
+    for row in controller.log_rows:
+        arr.append(row[1])
+    response = arr
+    return Response(json.dumps(response))
