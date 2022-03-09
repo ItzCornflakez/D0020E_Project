@@ -27,7 +27,7 @@ def rotate():
     i = int(jsonData['i'])
     j = int(jsonData['j'])    
     controller.rotate(i,j)
-    action = "has rotated to (" + str(i) + "," + str(j) + ")"
+    action = "Has rotated to (" + str(i) + "," + str(j) + ")"
     response = controller.databaseActions(action) 
     return Response(str(response))
 
@@ -51,7 +51,7 @@ def switchCam(cam):
         controller.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
     if(cam == "Bedroom"):
         controller.src = "http://130.240.105.145/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
-    action = "has switched to " + cam + ""
+    action = "Has switched to " + cam + ""
     response = controller.databaseActions(action) 
     return Response(str(response))
 

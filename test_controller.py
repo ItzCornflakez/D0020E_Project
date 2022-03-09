@@ -92,6 +92,8 @@ class Controller(Observer):
         sql = "SELECT * FROM log_table"
         self.cursor.execute(sql)
         self.log_rows = self.cursor.fetchall()
+        for row in self.log_rows:
+            print(row)
         self.connection.close()
     
     def databaseActions(self, action):
