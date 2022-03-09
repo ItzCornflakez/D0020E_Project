@@ -86,6 +86,8 @@ class Controller(Observer):
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="log")
         self.cursor = self.connection.cursor()
 
+        #logtable( log_id(int), entry(text), created_at(timestamp))
+
     def getAllLogs(self):
         self.databaseConn()
 
