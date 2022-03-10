@@ -35,20 +35,28 @@ def rotate():
 
 @views.route('/look/<tracker>')
 def look(tracker):
+    name = ""
     for key, value in controller.WideFindNameDict.items():
         if key == tracker:
+            name = tracker
             tracker = value
     controller.is_follow = False
     controller.lookAtWideFind(tracker)
+    action = "Now looking at " + name + ""
+    controller.databaseActions(action) 
     return ('', 204)  # Return "204 No Content"
 
 @views.route('/follow/<tracker>')
 def follow(tracker):
+    name = ""
     for key, value in controller.WideFindNameDict.items():
         if key == tracker:
+            name = tracker
             tracker = value
     controller.is_follow = True
     controller.followWideFind(tracker)
+    action = "Now following " + name + ""
+    controller.databaseActions(action) 
     print ("follow")
     return ('', 204)
 
