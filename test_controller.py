@@ -41,8 +41,10 @@ class Controller(Observer):
         oldNamesDict = {"Kitchen counter":"543D85B1B2D91E29",
                                 "Kitchen corner 1":"9691FE799F371A4C",
                                 "Kitchen corner 2":"D4984282E2E4D10B",
-                                "Bed":"4B2A8EE2B9BAAAC0",
-                                "Door":"03FF5C0A2BFA3A9B"
+                                "Bedroom computer": "4B2A8EE2B9BAAAC0",
+                                "Door":"03FF5C0A2BFA3A9B",
+                                "person1": "F1587D88122BE247",
+                                "Bed": "6881445FDC01E3F2"
                                 }
         self.WideFindNameDict = {}
         for key, value in self.trackersDict.items():
@@ -58,7 +60,8 @@ class Controller(Observer):
             tracker_pos = self.trackersDict[val]
             new_yaw = self.cam_trans.get_yaw_from_zero(tracker_pos)
             new_pitch = self.cam_trans.get_pitch_from_zero(tracker_pos)
-
+            if new_pitch > 70:
+                new_pitch = 70
             self.cam.rotate(new_yaw, new_pitch + 80)
 
     def followWideFind(self, val):
@@ -104,11 +107,9 @@ class Controller(Observer):
     def getAllLogs(self):
         self.databaseConn()
 
-        sql = "SELECT * FROM log_table"
+        sql = "SELECT * FROM log_table ORDER BY log_id DESC LIMIT 10"
         self.cursor.execute(sql)
         self.log_rows = self.cursor.fetchall()
-        for row in self.log_rows:
-            print(row)
         self.connection.close()
     
     def databaseActions(self, action):

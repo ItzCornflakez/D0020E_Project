@@ -19,12 +19,10 @@ class Main(Observer, ABC):
 
         widefind = wf.WideFind("130.240.74.55", 1883)
         widefind.attach(self)
-        widefind.run("ltu-system/#", False)
+        widefind.run("ltu-system/#", True)
 
     def update(self, subject: wf.WideFind) -> None:
-        self.camera.zoom(0)
-        print("Zooming")
-
+        pass
 
 # This is a makeshift test script.
 # Meant to be replaced by a proper interface.
