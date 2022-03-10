@@ -1,3 +1,4 @@
+from optparse import Values
 from re import X
 from camera import HDIntegratedCamera
 from observer_pattern.observer import Observer, Subject
@@ -12,7 +13,6 @@ class Controller(Observer):
     def __init__(self):
         
         self.getAllLogs()
-
 
         self.src = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
 
@@ -36,6 +36,19 @@ class Controller(Observer):
      
         self.followTarget = ""
         self.is_follow = False
+
+    def createWideFindNameDict(self):
+        oldNamesDict = {"Kitchen counter":"543D85B1B2D91E29",
+                                "Kitchen corner 1":"9691FE799F371A4C",
+                                "Kitchen corner 2":"D4984282E2E4D10B",
+                                "Bed":"4B2A8EE2B9BAAAC0",
+                                "Door":"03FF5C0A2BFA3A9B"
+                                }
+        self.WideFindNameDict = {}
+        for key, value in self.trackersDict.items():
+            for name, old_value in oldNamesDict.items():
+                if key == old_value and key not in self.WideFindNameDict.values():
+                    self.WideFindNameDict[name] = key             
 
     def rotate(self, i, j):
         self.cam.rotate(i, j)
@@ -113,6 +126,7 @@ class Controller(Observer):
 
     def update(self, subject: WideFind):
         self.trackersDict = subject.trackers
+        self.createWideFindNameDict()
         self.trackers = subject.trackers.keys()
         if(self.is_follow == True):
             if(self.followTarget in self.trackers):

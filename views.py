@@ -20,7 +20,7 @@ else:
 @views.route('/')
 def home():
     print ("this is controller src:" + str(controller.src))
-    return render_template('/index.html', src = controller.src, log_rows = controller.log_rows, widefindTrackers = controller.trackersDict)
+    return render_template('/index.html', src = controller.src, log_rows = controller.log_rows, widefindTrackers = controller.WideFindNameDict)
     
 @views.route('/rotate', methods=['POST'])
 def rotate():
@@ -35,12 +35,18 @@ def rotate():
 
 @views.route('/look/<tracker>')
 def look(tracker):
+    for key, value in controller.WideFindNameDict.items():
+        if key == tracker:
+            tracker = value
     controller.is_follow = False
     controller.lookAtWideFind(tracker)
     return ('', 204)  # Return "204 No Content"
 
 @views.route('/follow/<tracker>')
 def follow(tracker):
+    for key, value in controller.WideFindNameDict.items():
+        if key == tracker:
+            tracker = value
     controller.is_follow = True
     controller.followWideFind(tracker)
     print ("follow")
@@ -99,7 +105,7 @@ def zoomOut():
 @views.route("/getWidefind")
 def getWidefind():
     response = controller.trackersDict
-    print(response)
+    #print(response)
     return Response(str(response))
 
 @views.route("/getWidefindCoordinates")
