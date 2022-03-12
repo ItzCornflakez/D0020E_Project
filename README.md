@@ -111,7 +111,7 @@ To get a local copy up and running follow these simple example steps.
 Need the following software in order to run this application
 
 * Xampp Control Panel
-  Download and run, turn on apachee and mysql. Open up [http://localhost/phpmyadmin](http://localhost/phpmyadmin) and load in database file.
+  Download and run, turn on apachee and mysql. Open up [http://localhost/phpmyadmin](http://localhost/phpmyadmin) and import database_setup.myqsl.
 
 * npm
   ```sh
