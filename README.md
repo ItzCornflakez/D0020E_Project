@@ -86,7 +86,7 @@
 
 This is a project aimed at assisting healthcare workers looking to observe their patients. The project achieves this by using a Aw-he40 HD integrated camera for visuals and a set of WideFind sensors to obtain the position in the room. That position is then converted with some linear algebra to a rotation that the camera can understand.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `ItzCornflakez`, `D0020E_Project`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `ItzCornflakez`, `D0020E_Project`, `twitter_handle`, `linkedin_username`, `gmail`, `email`, `project_title`, `project_description`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -115,7 +115,11 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Need the following software in order to run this application
+
+* Xampp Control Panel
+  Download and run, turn on apachee and mysql. Open up [http://localhost/phpmyadmin]http://localhost/phpmyadmin and load in database file.
+
 * npm
   ```sh
   npm install npm@latest -g
@@ -155,11 +159,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
 See the [open issues](https://github.com/ItzCornflakez/D0020E_Project/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -196,7 +195,17 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Alexander Österberg - [@twitter_handle](https://twitter.com/Alexandersterb1) - dikesalex@gmail.com
+
+Martin Askolin - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+
+Isak Lundmark - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+
+Filip Bergström - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+
+Marcus Eriksson - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+
+
 
 Project Link: [https://github.com/ItzCornflakez/D0020E_Project](https://github.com/ItzCornflakez/D0020E_Project)
 
