@@ -1,13 +1,9 @@
-from optparse import Values
-from re import X
 from camera import HDIntegratedCamera
-from observer_pattern.observer import Observer, Subject
+from observer_pattern.observer import Observer
 import numpy
-
 from widefind import WideFind
 import widefind as wf
 import pymysql
-
 
 class Controller(Observer):
     def __init__(self):

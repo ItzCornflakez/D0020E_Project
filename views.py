@@ -1,7 +1,5 @@
-from urllib import response
-from xml.dom.minidom import Document
 from flask import Blueprint, jsonify, render_template, request, Response, make_response
-from test_controller import Controller
+from controller import Controller
 import widefind as wf
 import json
 
@@ -19,7 +17,6 @@ else:
 
 @views.route('/')
 def home():
-    print ("this is controller src:" + str(controller.src))
     return render_template('/index.html', src = controller.src, log_rows = controller.log_rows, widefindTrackers = controller.WideFindNameDict)
     
 @views.route('/rotate', methods=['POST'])
@@ -44,7 +41,7 @@ def look(tracker):
     controller.lookAtWideFind(tracker)
     action = "Now looking at " + name + ""
     controller.databaseActions(action) 
-    return ('', 204)  # Return "204 No Content"
+    return ('', 204)
 
 @views.route('/follow/<tracker>')
 def follow(tracker):
@@ -57,7 +54,6 @@ def follow(tracker):
     controller.followWideFind(tracker)
     action = "Now following " + name + ""
     controller.databaseActions(action) 
-    print ("follow")
     return ('', 204)
 
 @views.route('/switchCam/<cam>')
@@ -75,37 +71,31 @@ def switchCam(cam):
 @views.route('/up')
 def up():
     controller.up()
-    print ("up")
     return ('', 204)
 
 @views.route('/down')
 def down():
     controller.down()
-    print ("down")
     return ('', 204)
 
 @views.route('/left')
 def left():
     controller.left()
-    print ("left")
     return ('', 204)
 
 @views.route('/right')
 def right():
     controller.right()
-    print ("right")
     return ('', 204)
 
 @views.route('/zoomIn')
 def zoomIn():
     controller.zoomIn()
-    print ("Zoom in")
     return ('', 204)
 
 @views.route('/zoomOut')
 def zoomOut():
     controller.zoomOut()
-    print ("Zoom out")
     return ('', 204)
 
 
@@ -113,7 +103,6 @@ def zoomOut():
 @views.route("/getWidefind")
 def getWidefind():
     response = controller.trackersDict
-    #print(response)
     return Response(str(response))
 
 @views.route("/getWidefindCoordinates")
