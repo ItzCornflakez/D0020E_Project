@@ -86,22 +86,15 @@
 
 This is a project aimed at assisting healthcare workers looking to observe their patients. The project achieves this by using a Aw-he40 HD integrated camera for visuals and a set of WideFind sensors to obtain the position in the room. That position is then converted with some linear algebra to a rotation that the camera can understand.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `ItzCornflakez`, `D0020E_Project`, `twitter_handle`, `linkedin_username`, `gmail`, `email`, `project_title`, `project_description`
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Python](https://www.python.org/)
+* [Javascript](https://www.javascript.com/)
+* [Mqtt](https://mqtt.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
