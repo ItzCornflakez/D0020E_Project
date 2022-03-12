@@ -82,7 +82,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<img src="images/screenshot.png" alt="screenshot" width="640" height="280">
 
 This is a project aimed at assisting healthcare workers looking to observe their patients. The project achieves this by using a Aw-he40 HD integrated camera for visuals and a set of WideFind sensors to obtain the position in the room. That position is then converted with some linear algebra to a rotation that the camera can understand.
 
