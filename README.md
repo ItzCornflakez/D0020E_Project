@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ItzCornflakez/D0020E_Project">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.jpg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Camera control using UWB-navigation with WideFind sensors</h3>
