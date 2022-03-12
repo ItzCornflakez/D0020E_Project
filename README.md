@@ -36,7 +36,7 @@
 <h3 align="center">Camera control using UWB-navigation with WideFind sensors</h3>
 
   <p align="center">
-    This is a project aimed at assisting healthcare workers looking to observe their patients. The project achieves this by using a Aw-he40 HD integrated camera for visuals and a set of WideFind sensors to obtain the position in the room. That position is then converted with some linear algebra to a rotation that the camera can understand. 
+     A project focused on camera control
     <br />
     <a href="https://github.com/ItzCornflakez/D0020E_Project"><strong>Explore the docs »</strong></a>
     <br />
@@ -83,6 +83,8 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+This is a project aimed at assisting healthcare workers looking to observe their patients. The project achieves this by using a Aw-he40 HD integrated camera for visuals and a set of WideFind sensors to obtain the position in the room. That position is then converted with some linear algebra to a rotation that the camera can understand.
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `ItzCornflakez`, `D0020E_Project`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
