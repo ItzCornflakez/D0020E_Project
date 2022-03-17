@@ -111,6 +111,8 @@ Need the following software in order to run this application
 
 * Xampp Control Panel
   Download and run, turn on apachee and mysql. Open up [http://localhost/phpmyadmin](http://localhost/phpmyadmin) and import database_setup.myqsl.
+ 
+* A code editor, recommending visual studio code.
 
 ### Installation
 
