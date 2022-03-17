@@ -103,8 +103,7 @@ This is a project aimed at assisting healthcare workers looking to observe their
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Perform the following to install and run the program in your code editor of choice.
 
 ### Prerequisites
 
