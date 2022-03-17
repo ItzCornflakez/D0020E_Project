@@ -113,18 +113,14 @@ Need the following software in order to run this application
 * Xampp Control Panel
   Download and run, turn on apachee and mysql. Open up [http://localhost/phpmyadmin](http://localhost/phpmyadmin) and import database_setup.myqsl.
 
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
 ### Installation
 
 1. Begin by doing the prerequisites
 2. Download the zip file of the project and unpack it in your code editor of choice.
 3. Start the Xampp control panel and boot up apachee and mysql.
-4. run the app.py file in your editor.
-5. Open up firefox browser and put in http://127.0.0.1:5000/.
+4. Make sure to pip install all necessary imports when code is not compiling correct.
+5. Run the app.py file in your editor.
+6. Open up firefox browser and put in http://127.0.0.1:5000/.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
