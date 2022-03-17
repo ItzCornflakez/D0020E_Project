@@ -122,7 +122,7 @@ Need the following software in order to run this application
 
 1. Begin by doing the prerequisites
 2. Download the zip file of the project and unpack it in your code editor of choice.
-3. Start the Xxamp control panel and boot up apachee and mysql.
+3. Start the Xampp control panel and boot up apachee and mysql.
 4. run the app.py file in your editor.
 5. Open up firefox browser and put in http://127.0.0.1:5000/.
 
