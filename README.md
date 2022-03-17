@@ -120,19 +120,11 @@ Need the following software in order to run this application
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/ItzCornflakez/D0020E_Project.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+1. Begin by doing the prerequisites
+2. Download the zip file of the project and unpack it in your code editor of choice.
+3. Start the Xxamp control panel and boot up apachee and mysql.
+4. run the app.py file in your editor.
+5. Open up firefox browser and put in http://127.0.0.1:5000/.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
