@@ -74,7 +74,6 @@
       <div class="dropdown">
         <button class="button bottomRow">Follow person</button>
         <div class="dropdown-content">
-          <!-- TODO: Printing loop to show connected persons -->
           {% for tracker in widefindTrackers.keys() %}
           <a onclick="follow('{{ tracker }}')">{{ tracker }}</a>
           {% endfor %}
@@ -84,7 +83,6 @@
       <div class="dropdown">
         <button class="button bottomRow">Look at person</button>
         <div class="dropdown-content">
-          <!-- TODO: Printing loop to show connected persons -->
           {% for tracker in widefindTrackers.keys() %}
           <a onclick="lookAt('{{ tracker }}')">{{ tracker }}</a>
           {% endfor %}
@@ -94,7 +92,6 @@
       <div class="dropdown">
         <button class="button bottomRow">Change camera</button>
         <div class="dropdown-content">
-          <!-- TODO: Printing loop to show connected persons -->
           <a onclick="switchCam('Kitchen')">Kitchen</a>
           <a onclick="switchCam('Bedroom')">Bedroom</a>
         </div>
@@ -106,12 +103,12 @@
     
       <div id="overlay" onclick="off()">
           <div id="text">
-              <!-- TODO: Rubrik? -->
               {% for row in log_rows %}
               <p>{{ row[1] }}</p>
               {% endfor %}
           </div>
           <script>
+            //Script to update log every second
             list = document.getElementById("text")
             setInterval(() => {
                 fetch("{{ url_for('views.updateLog') }}").then((response) => {

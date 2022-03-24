@@ -3,9 +3,11 @@ from controller import Controller
 import widefind as wf
 import json
 
+#Instantiate a blueprint of views and a controller
 views = Blueprint('views', __name__)
 controller = Controller()
 
+#Try catch of widefind system to see if it can be connected to or not
 try: 
     widefind = wf.WideFind("130.240.74.55", 1883)
     widefind.run("ltu-system/#", False)
@@ -15,10 +17,12 @@ except:
 else:
     print("WideFind connected")
 
+#Default route with a few variables passed to the html file
 @views.route('/')
 def home():
     return render_template('/index.html', src = controller.src, log_rows = controller.log_rows, widefindTrackers = controller.WideFindNameDict)
     
+#Rotate function that takes 2 variables as input through json and rotates the camera using the controller
 @views.route('/rotate', methods=['POST'])
 def rotate():
     controller.is_follow = False
@@ -30,6 +34,7 @@ def rotate():
     response = controller.databaseActions(action) 
     return Response(str(response))
 
+#Look at function that takes the value passed to the function through fetch and passes it to the controller so it can rotate the camera in the direction of the tracker
 @views.route('/look/<tracker>')
 def look(tracker):
     name = ""
@@ -43,6 +48,7 @@ def look(tracker):
     controller.databaseActions(action) 
     return ('', 204)
 
+#Follow function that takes the value passed to the function through fetch and passes it to the controller so it can rotate the camera in the direction of the tracker
 @views.route('/follow/<tracker>')
 def follow(tracker):
     name = ""
@@ -56,6 +62,7 @@ def follow(tracker):
     controller.databaseActions(action) 
     return ('', 204)
 
+#Switch function that takes the value passed to the function through fetch and passes it to the controller so it can switch the camera
 @views.route('/switchCam/<cam>')
 def switchCam(cam):
     controller.switchCam(cam)
@@ -99,7 +106,7 @@ def zoomOut():
     return ('', 204)
 
 
-#WideFind stuff
+#Placeholder function for getting widefind 
 @views.route("/getWidefind")
 def getWidefind():
     response = controller.trackersDict
