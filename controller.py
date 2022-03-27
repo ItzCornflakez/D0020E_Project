@@ -7,6 +7,7 @@ import pymysql
 
 class Controller(Observer):
     def __init__(self):
+        #Instantiates all relevant tools the controller needs to operate
         
         self.getAllLogs()
 
@@ -34,6 +35,7 @@ class Controller(Observer):
         self.is_follow = False
 
     def createWideFindNameDict(self):
+        #A function for creating a dictionary to link sensor id to a name
         oldNamesDict = {"Kitchen counter":"543D85B1B2D91E29",
                                 "Kitchen corner 1":"9691FE799F371A4C",
                                 "Kitchen corner 2":"D4984282E2E4D10B",
@@ -49,9 +51,11 @@ class Controller(Observer):
                     self.WideFindNameDict[name] = key             
 
     def rotate(self, i, j):
+        #A function handling a rotate command
         self.cam.rotate(i, j)
 
     def lookAtWideFind(self, val):
+        #A function handling a look at sensor command by calling rotate command with specific cordinates 
         if val in self.trackers:
             tracker_pos = self.trackersDict[val]
             new_yaw = self.cam_trans.get_yaw_from_zero(tracker_pos)
@@ -61,9 +65,11 @@ class Controller(Observer):
             self.cam.rotate(new_yaw, new_pitch + 80)
 
     def followWideFind(self, val):
+        #A function turning on follow so camera follows a specific sensor
         self.followTarget = val
 
     def switchCam(self, cam):
+        #A function that switches camera by changing url to camera and changing its transform to have the right room values
         if(cam == "Kitchen"):
             self.cam = HDIntegratedCamera("http://130.240.105.144/cgi-bin/aw_ptz?cmd=%23")
             self.cam_trans = wf.Transform(self.camera_kitchen_pos, self.camera_kitchen_zero, self.camera_kitchen_floor)
@@ -71,6 +77,7 @@ class Controller(Observer):
             self.cam = HDIntegratedCamera("http://130.240.105.145/cgi-bin/aw_ptz?cmd=%23")
             self.cam_trans = wf.Transform(self.camera_bedroom_pos, self.camera_bedroom_zero, self.camera_bedroom_floor)
 
+    #Handling of manual input with arrow keys
     def up(self):
         self.is_follow = False
         self.cam.rotate(self.cam.get_current_yaw(), self.cam.get_current_pitch() + self.rot_amount)
@@ -87,6 +94,7 @@ class Controller(Observer):
         self.is_follow = False
         self.cam.rotate(self.cam.get_current_yaw() + self.rot_amount, self.cam.get_current_pitch())
 
+    #Handling of zoom in and zoom out on interface
     def zoomIn(self):
         self.cam.zoom(50)
 
@@ -101,6 +109,7 @@ class Controller(Observer):
         #logtable( log_id(int), entry(text), created_at(timestamp))
 
     def getAllLogs(self):
+        #A function that connects to database and gets the 10 most relevant actions done on the interface
         self.databaseConn()
 
         sql = "SELECT * FROM log_table ORDER BY log_id DESC LIMIT 10"
@@ -109,6 +118,7 @@ class Controller(Observer):
         self.connection.close()
     
     def databaseActions(self, action):
+        #A function that adds a action, done through the interface, to the database
         self.databaseConn()
         sql = "INSERT INTO log_table(entry) VALUES('" + str(action) + "');"
         print(sql)
@@ -120,8 +130,8 @@ class Controller(Observer):
 
         
 
-
     def update(self, subject: WideFind):
+        #Gets notifications from widefind and updates all relevant data aswell as handling following a sensor
         self.trackersDict = subject.trackers
         self.createWideFindNameDict()
         self.trackers = subject.trackers.keys()

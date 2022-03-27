@@ -13,6 +13,7 @@
 
 <body>
   <script type=text/javascript>
+  //A ajax post request done to send rotation cordinates as json data.
       $(function() {
         $('a#rotate').on('click', function(e) {
           e.preventDefault()
@@ -33,7 +34,7 @@
   <div class="video-container">
 
     <!-- THIS ONLY WORKS IN FIREFOX -->
-    <!-- This row of code is the only necessary row. Remove all video related stuff except styling -->
+    <!-- A img tag with the video source that is adapted to screen size with a script-->
     <img src="{{ src }}"
       alt="{{ src }}" width="1920"
       height="1080" id="feed">
@@ -59,7 +60,6 @@
       <div class="dropdown">
         <button class="button bottomRow">Rotate camera</button>
         <div class="dropdown-content">
-          <!-- TODO: Printing loop to show connected persons -->
           <form>
             <a>Yaw: <input type="number" style="background-color: rgb(155, 170, 169);" class="bottomRow" name="yaw"
                 id="yaw" min="0" max="360"></a>
@@ -70,7 +70,6 @@
         </div>
       </div>
 
-      <!-- 3 dropdown buttons -->
       <div class="dropdown">
         <button class="button bottomRow">Follow person</button>
         <div class="dropdown-content">
@@ -148,6 +147,8 @@
 
 <script>
 
+  //Scripts to handle all interaction with interface
+  
   function on(){
     document.getElementById("overlay").style.display = "block";
   }

@@ -106,7 +106,7 @@ def zoomOut():
     return ('', 204)
 
 
-#Placeholder function for getting widefind 
+#Placeholder function for getting widefind sensors and updating that list on interface(can be done in the same way as updatelog below)
 @views.route("/getWidefind")
 def getWidefind():
     response = controller.trackersDict
@@ -121,6 +121,7 @@ def getWidefindCoordinates(wfID):
 
 @views.route("/updateLog")
 def updateLog():
+    #A function that updates log on interface by sending the newest version of it to index.html through a json response
     arr = []
     for row in controller.log_rows:
         arr.append(row[1])
