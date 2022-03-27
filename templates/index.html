@@ -149,10 +149,13 @@
 
   //Scripts to handle all interaction with interface
   
+
+  // Make console visible
   function on(){
     document.getElementById("overlay").style.display = "block";
   }
-    
+  
+  // Make console invisible
   function off(){
     document.getElementById("overlay").style.display = "none";
   }
@@ -166,6 +169,8 @@
     var s = "/follow/" + target
     fetch(s)
   }
+
+  // Switches between the 2 cameras when called.
   function switchCam(cam) {
     var s = "/switchCam/" + cam
     fetch(s)
@@ -179,6 +184,8 @@
       img.alt = "http://130.240.105.144/cgi-bin/mjpeg?resolution=1920x1080&amp;framerate=5&amp;quality=1"
     }
   }
+
+  // Manual camera control functions
   function up() {
     var s = "/up"
     fetch(s)
@@ -209,6 +216,7 @@
     fetch(s)
   }
 
+  // Keydown events
   document.addEventListener("keydown" , function(e){
     if(e.keyCode == 37 || e.keyCode == 65 ) {
       left();
