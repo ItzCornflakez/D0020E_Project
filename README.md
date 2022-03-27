@@ -175,7 +175,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Alexander Österberg - [@twitter_handle](https://twitter.com/Alexandersterb1) - dikesalex@gmail.com
+Alexander Österberg - [@Alexandersterb1](https://twitter.com/Alexandersterb1) - dikesalex@gmail.com
 
 Martin Askolin - marsak-8@student.ltu.se
 
