@@ -177,13 +177,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Alexander Österberg - [@twitter_handle](https://twitter.com/Alexandersterb1) - dikesalex@gmail.com
 
-Martin Askolin - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+Martin Askolin - marsak-8@student.ltu.se
 
-Isak Lundmark - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+Isak Lundmark - lunisa-9@student.ltu.se
 
-Filip Bergström - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+Filip Bergström - filber-9@student.ltu.se
 
-Marcus Eriksson - [@twitter_handle](https://twitter.com/name) - name@gmail.com
+Marcus Eriksson - amueri-6@student.ltu.se
 
 
 
