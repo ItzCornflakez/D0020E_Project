@@ -8,7 +8,7 @@ from observer_pattern.observer import Subject, Observer
 
 class WideFind(Subject, ABC):
     """
-    Receives information regarding its trackers from WideFind sensor.
+    Receives information regarding its trackers from physical WideFind sensor and notifies observers.
 
     Args:
         url (str): WideFind's URL that should be used.
@@ -48,7 +48,7 @@ class WideFind(Subject, ABC):
 
     def __on_connect(self, client, userdata, flags, rc, properties=None):
         if self.debug:
-            print("Widefind: Connected to " + self.broker_url + ":" + str(self.broker_port))
+            print("WideFind: Connected to " + self.broker_url + ":" + str(self.broker_port))
 
     def __on_message(self, client, userdata, message):
         # Decode message and put into list
@@ -62,7 +62,7 @@ class WideFind(Subject, ABC):
         self.trackers[tracker_id] = tracker_pos
 
         if self.debug:
-            print("Widefind: Tracker with id: " + tracker_id + ", currently positioned at " + tracker_pos.__repr__())
+            print("WideFind: Tracker with id: " + tracker_id + ", currently positioned at " + tracker_pos.__repr__())
 
         self.notify()
 
@@ -71,32 +71,50 @@ class WideFind(Subject, ABC):
         self._observers.append(observer)
 
         if self.debug:
-            print("Widefind: Attached an observer")
+            print("WideFind: Attached an observer")
 
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
         if self.debug:
-            print("Widefind: Detached an observer")
+            print("WideFind: Detached an observer")
 
     def notify(self) -> None:
         if self.debug:
-            print("Widefind: Notifying observers")
+            print("WideFind: Notifying observers")
 
         for observer in self._observers:
             observer.update(self)
 
 
 class Transform:
+    """
+        Transform of an object using WideFind coordinates. Contains functions for useful linear algebra calculations.
+
+        Args:
+            position (np.array): Position of object using WideFind's coordinate-system
+            zero (np.array): some coordinate in front of object using WideFind's coordinate-system
+            down (np.array): some coordinate underneath object using WideFind's coordinate-system
+        """
+
     def __init__(self, position: np.array, zero: np.array, down: np.array):
+        # Translate coordinates into zero and down vectors relative to position.
         zero_vec = np.subtract(zero, position)
         down_vec = np.subtract(down, position)
 
+        # Create unit vectors for zero and down.
         self.zero_unit_vec = zero_vec / np.linalg.norm(zero_vec)
         self.down_unit_vec = down_vec / np.linalg.norm(down_vec)
         self.position = position
 
     def get_yaw_from_zero(self, coordinate: np.array) -> int:
+        """
+        Returns the angle between Transform's zero vector and coordinate given
+
+        Args:
+            coordinate (np.array): Coordinate to calculate relative angle to.
+        """
+
         coord_vec = np.subtract(coordinate, self.position)
         coord_unit_vec = coord_vec / np.linalg.norm(coord_vec)
 
@@ -118,6 +136,13 @@ class Transform:
         return yaw_deg_angle
 
     def get_pitch_from_zero(self, coordinate: np.array) -> int:
+        """
+        Returns the angle between Transform's down vector and coordinate given
+
+        Args:
+            coordinate (np.array): Coordinate to calculate relative angle to.
+        """
+
         coord_vec = np.subtract(coordinate, self.position)
         coord_unit_vec = coord_vec / np.linalg.norm(coord_vec)
 

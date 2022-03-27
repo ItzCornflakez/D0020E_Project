@@ -3,6 +3,13 @@ import requests
 
 
 class HDIntegratedCamera:
+    """
+    Class enabling connection and interaction with HD Integrated Camera.
+
+    Args:
+        baseurl (str): URL for communication with camera.
+
+    """
     class Conversion:
         """Contains values for translating degrees to camera's hex values."""
         DEG_TO_HEX_YAW = 42480 / 350
@@ -75,7 +82,7 @@ class HDIntegratedCamera:
         self.set_current_pitch(new_pitch)
 
     def zoom(self, new_zoom: int):
-        """takes an integer representing the zoom-percent"""
+        """takes an integer representing the zoom-percentage"""
         url = self.__BASEURL + self.Commands.ZOOM
         url += self.convert_zoom(new_zoom)
         url += "&res=1"
