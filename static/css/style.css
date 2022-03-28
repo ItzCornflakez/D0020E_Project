@@ -1,22 +1,26 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300);
 
+/* css code for placing things into their assigned possitons and their apperance on the screen */
+
 body {
   margin: 0px;
   padding: 0px;
   overflow:hidden;
 }
+/* places video feed in middle of the screen */
 
 .video-container {
   width: 100vw;
 	height: 100vh;
 }
+/* the appereance of elements*/
 
 .videoElement {
   width: 100%;
   height: 100%;
   background-color: green;
 }
-
+/* places buttons at the bottom part of screen */
 .footer{
   display:flex;
   flex-direction:row;
@@ -27,7 +31,7 @@ body {
   width: 100%;
   bottom: 1%;
 }
-
+/* keeps buttons alligned at the bottom of screen */
 .bottomRow{
   display:inline-block;
   padding:0.3em 1.2em;
@@ -42,16 +46,15 @@ body {
   background-color:#4eb5f1;
   text-align:center;
 }
-
+/* changes the colour when having mouse over the buttom */
 .bottomRow:hover{
   background-color:#4095c6;
 }
-
+/*Create a dropdown box that appears when the user moves the mouse over an element/
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
 .dropdown-content {
   display: none;
   flex-direction:column;
@@ -81,6 +84,7 @@ body {
   display: flex;
 }
 
+/*the text of the specific keys.*/
 
 .keys {
   font-family: 'Lato', sans-serif;
@@ -90,12 +94,12 @@ body {
   margin: auto;
 }
 
+/*handles arrow buttons positions and appereances.*/
 .arrfooter{
   position: absolute;
   bottom: 2%;
   right: 2%;
 }
-
 
 .arr {
   cursor: pointer;
@@ -122,7 +126,7 @@ body {
   bottom: 1%;
   left: 1%;
 }
-
+/* decides what the button for the log should look like */
 .overButton{
   cursor: pointer;
   width: 100px;
@@ -135,6 +139,7 @@ body {
   display: inline-block;
 }
 
+/* creates and overlay effect */
 #overlay{
   position: fixed;
   display: none;
