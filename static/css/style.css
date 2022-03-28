@@ -50,7 +50,7 @@ body {
 .bottomRow:hover{
   background-color:#4095c6;
 }
-/*Create a dropdown box that appears when the user moves the mouse over an element/
+/*Create a dropdown box that appears when the user moves the mouse over an element*/
 .dropdown {
   position: relative;
   display: inline-block;
