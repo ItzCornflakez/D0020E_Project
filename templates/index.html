@@ -159,12 +159,12 @@
   function off(){
     document.getElementById("overlay").style.display = "none";
   }
-
+  //looks at person with widefind when called
   function lookAt(target) {
     var s = "/look/" + target
     fetch(s)
   }
-
+  //follows person with widefind when called
   function follow(target) {
     var s = "/follow/" + target
     fetch(s)
