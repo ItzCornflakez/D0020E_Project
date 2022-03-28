@@ -61,6 +61,8 @@ class HDIntegratedCamera:
         return str(degrees)[2:].upper()
 
     @staticmethod
+            """Converts the zooming % to hexadecimal for zoom command to HD Integrated Camera"""
+
     def convert_zoom(new_zoom: int):
         clamped_input = max(0, min(100, new_zoom))
         res = hex(int(1365 + clamped_input * 27.30))
